@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adeoye Opeyemi — Full-Stack &amp; Systems Software Engineer</title>
+  <meta name="description" content="Full-stack engineer building dependable web applications, backend APIs, and secure software systems. Based in Nigeria." />
+  <meta property="og:title" content="Adeoye Opeyemi — Software Engineer" />
+  <meta property="og:description" content="Full-stack engineer building dependable products across web, APIs, and systems." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts: Strictly Manrope per B1 rules (No Inter, No Italics) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <style>
+    /* ── DESIGN SYSTEM TOKENS ────────────────────────────────── */
+    :root {
+      --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+
+      /* Easing per B7 */
+      --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+      
+      /* Tailwind Type Scale per B1 */
+      --text-xs:   0.75rem;    /* 12px / 16px */
+      --text-sm:   0.875rem;   /* 14px / 20px */
+      --text-base: 1rem;       /* 16px / 24px */
+      --text-lg:   1.125rem;   /* 18px / 28px */
+      --text-xl:   1.25rem;    /* 20px / 28px */
+      --text-2xl:  1.5rem;     /* 24px / 32px */
+      --text-3xl:  1.875rem;   /* 30px / 36px */
+      --text-4xl:  2.25rem;    /* 36px / 40px */
+      --text-5xl:  3rem;       /* 48px / 1 */
+      --text-6xl:  3.75rem;    /* 60px / 1 */
+
+      /* Spacing Tokens per B2 */
+      --space-50:  4px;
+      --space-75:  8px;
+      --space-100: 12px;
+      --space-200: 16px;
+      --space-300: 24px;
+      --space-400: 32px;
+      --space-500: 40px;
+      --space-600: 48px;
+      --space-700: 64px;
+      --space-800: 80px;
+      --space-900: 96px;
+
+      /* Radii per B3 */
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+    }
+
+    /* Dark Mode per B4 */
+    [data-theme="dark"] {
+      --bg:           #000000;
+      --surface:      #181818;
+      --card-bg:      #181818;
+      --card-hover:   #1f1f1f;
+      --line:         #272727;
+      --muted:        #888888;
+      --sub:          #a1a1aa;
+      --body:         #d4d4d8;
+      --head-start:   #ffffff;
+      --head-end:     #9b9b9b;
+      --head-solid:   #ffffff;
+      --accent:       #c8f542;
+      --accent-subtle:rgba(200, 245, 66, 0.12);
+      --nav-bg:       rgba(0, 0, 0, 0.82);
+      --logo-invert:  0;
+    }
+
+    /* Light Mode per B4 & B5 */
+    [data-theme="light"] {
+      --bg:           #ffffff;
+      --surface:      #f8fafc;
+      --card-bg:      #ffffff;
+      --card-hover:   #f1f5f9;
+      --line:         #e2e8f0;
+      --muted:        #94a3b8;
+      --sub:          #64748b;
+      --body:         #334155;
+      --head-start:   #000000;
+      --head-end:     #666666;
+      --head-solid:   #0f172a;
+      --accent:       #4d7c0f;
+      --accent-subtle:rgba(77, 124, 15, 0.12);
+      --nav-bg:       rgba(255, 255, 255, 0.88);
+      --logo-invert:  1;
+    }
+
+    /* ── RESET & BASE ────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--body);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      text-wrap: pretty; /* B1 no orphaned words */
+      overflow-x: hidden;
+      transition: background-color 0.4s var(--ease-fluid), color 0.4s var(--ease-fluid);
+    }
+    h1, h2, h3, h4, h5, h6 {
+      text-wrap: balance; /* B1 heading balance */
+      color: var(--head-solid);
+      font-weight: 600;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; height: auto; }
+    ul { list-style: none; }
+    button { background: none; border: none; cursor: pointer; font: inherit; color: inherit; }
+
+    /* Focus ring per B9 */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ── CONTAINER ───────────────────────────────────────────── */
+    .container {
+      width: min(100%, 1120px);
+      margin-inline: auto;
+      padding-inline: var(--space-300);
+    }
+
+    /* ── NAVIGATION (Fluid Island Nav per B7) ────────────────── */
+    nav {
+      position: fixed; top: var(--space-200); left: 0; right: 0; z-index: 100;
+      width: min(calc(100% - 32px), 1080px);
+      margin-inline: auto;
+      padding: var(--space-100) var(--space-300);
+      display: flex; align-items: center; justify-content: space-between;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(20px);
+      background-color: var(--nav-bg);
+      transition: all 0.4s var(--ease-fluid);
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: var(--space-75);
+    }
+    .nav-logo-img {
+      width: 26px; height: 26px; object-fit: contain;
+      filter: invert(var(--logo-invert));
+      transition: filter 0.3s var(--ease-fluid);
+    }
+    .nav-logo-text {
+      font-size: var(--text-sm); font-weight: 700;
+      letter-spacing: -0.01em; color: var(--head-solid);
+    }
+    .nav-links {
+      display: flex; gap: var(--space-300); align-items: center;
+      font-size: var(--text-sm); font-weight: 500;
+    }
+    .nav-links a {
+      color: var(--sub); transition: color 0.25s var(--ease-fluid);
+    }
+    .nav-links a:hover { color: var(--head-solid); }
+
+    .nav-actions {
+      display: flex; align-items: center; gap: var(--space-100);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--line);
+      color: var(--head-solid);
+      background: var(--surface);
+      transition: all 0.25s var(--ease-fluid);
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+    .theme-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+
+    /* Button Type per B1: Header button text-sm, 8px py, 12px px per B2 */
+    .nav-cta {
+      font-size: var(--text-sm); font-weight: 600;
+      color: var(--head-solid);
+      background: var(--surface);
+      padding: var(--space-75) var(--space-200);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-full);
+      display: inline-flex; align-items: center; gap: var(--space-50);
+      transition: all 0.3s var(--ease-fluid);
+    }
+    .nav-cta:hover {
+      border-color: var(--head-solid);
+      transform: translateY(-1px);
+    }
+    .nav-cta:active { transform: translateY(1px) scale(0.98); } /* Active state B9 */
+
+    /* ── HERO SECTION (B5 & Ref 02) ─────────────────────────── */
+    #hero {
+      padding-top: clamp(7.5rem, 14vh, 10.5rem);
+      padding-bottom: var(--space-800);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: var(--space-600);
+      align-items: center;
+    }
+    .hero-status-pill {
+      display: inline-flex; align-items: center; gap: var(--space-75);
+      padding: var(--space-50) var(--space-100);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs); font-weight: 600;
+      color: var(--sub);
+      margin-bottom: var(--space-200);
+    }
+    .status-dot {
+      width: 6px; height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+    }
+
+    /* B5 Gradient Heading: Dark theme #FFFFFF -> #9B9B9B, Light theme #000000 -> #666666 */
+    .hero-headline {
+      font-size: clamp(2.25rem, 5vw, 3.75rem); /* text-4xl to text-6xl scale */
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 680px; /* B5 max width */
+      margin-bottom: var(--space-200);
+
+      background: linear-gradient(90deg, var(--head-start), var(--head-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--sub);
+      max-width: 680px; /* B5 max width */
+      margin-bottom: var(--space-400);
+    }
+
+    .hero-actions {
+      display: flex; align-items: center; gap: var(--space-200);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-500);
+    }
+
+    /* Main buttons per B1 & B2: text-base (16px), semibold, 8px vertical, 16px horizontal */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: var(--space-75);
+      padding: var(--space-75) var(--space-200);
+      background: var(--head-solid);
+      color: var(--bg);
+      font-size: var(--text-base); font-weight: 600;
+      border: 1px solid var(--head-solid);
+      border-radius: var(--radius-full);
+      transition: all 0.3s var(--ease-fluid);
+    }
+    .btn-primary:hover {
+      opacity: 0.92;
+      transform: translateY(-2px);
+    }
+    .btn-primary:active { transform: scale(0.98); }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: var(--space-75);
+      padding: var(--space-75) var(--space-200);
+      background: var(--surface);
+      color: var(--head-solid);
+      font-size: var(--text-base); font-weight: 600;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-full);
+      transition: all 0.3s var(--ease-fluid);
+    }
+    .btn-secondary:hover {
+      border-color: var(--head-solid);
+      transform: translateY(-2px);
+    }
+    .btn-secondary:active { transform: scale(0.98); }
+
+    /* Real Tech Stack Row */
+    .hero-tech-row {
+      display: flex; align-items: center; gap: var(--space-200);
+      flex-wrap: wrap;
+      padding-top: var(--space-200);
+      border-top: 1px solid var(--line);
+    }
+    .hero-tech-label {
+      font-size: var(--text-xs); font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .tech-icon-badge {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      transition: all 0.25s var(--ease-fluid);
+    }
+    .tech-icon-badge:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .tech-icon-badge img { width: 20px; height: 20px; object-fit: contain; }
+    .tech-icon-badge svg { width: 20px; height: 20px; }
+
+    /* Hero Portrait Card (Ref 02) */
+    .hero-portrait-card {
+      background: var(--surface);
+      border: 1px solid var(--line); /* Border all around B4 */
+      border-radius: var(--radius-xl);
+      padding: var(--space-200);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-portrait-img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      object-fit: cover;
+      display: block;
+      aspect-ratio: 4 / 4.2;
+    }
+
+    /* ── MANDATORY TAGLINE REVEAL SECTION (B11) ───────────────── */
+    #tagline-reveal {
+      padding-block: var(--space-800);
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+    .tagline-container {
+      max-width: 680px; /* B5 max width */
+      margin-inline: auto;
+      text-align: center;
+    }
+    .tagline-text {
+      font-size: clamp(1.875rem, 4vw, 3rem); /* text-3xl to text-5xl scale */
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+      color: var(--head-solid);
+    }
+    /* B11 animation: Words start at 30% opacity and light up to 100% on scroll */
+    .tagline-word {
+      display: inline-block;
+      opacity: 0.3;
+      transition: opacity 0.4s var(--ease-fluid);
+      margin-right: 0.22em;
+    }
+    .tagline-word.active {
+      opacity: 1;
+    }
+
+    /* ── SECTION BASE ────────────────────────────────────────── */
+    section { padding-block: var(--space-800); border-bottom: 1px solid var(--line); }
+    .section-label {
+      font-size: var(--text-xs); font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--space-100);
+    }
+    .section-title {
+      font-size: clamp(1.875rem, 3.5vw, 3rem); /* text-3xl to text-5xl scale */
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      margin-bottom: var(--space-300);
+    }
+
+    /* ── PROJECTS SECTION (2-COL GRID REFERENCE 01) ─────────── */
+    .projects-intro {
+      max-width: 680px;
+      margin-bottom: var(--space-600);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-400);
+    }
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--line); /* Border all around per B4 */
+      border-radius: var(--radius-xl); /* Outer radius = 24px */
+      padding: var(--space-200); /* Gap = 16px */
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s var(--ease-fluid);
+    }
+    .project-card:hover {
+      border-color: var(--sub);
+      background-color: var(--card-hover);
+      transform: translateY(-3px);
+    }
+    .project-card:active { transform: scale(0.98); } /* B9 Active state */
+
+    /* Inner radius formula B3: inner = outer (24px) - gap (16px) = 8px (rounded-lg) */
+    .project-mockup-wrapper {
+      width: 100%;
+      border-radius: var(--radius-lg); /* 8px inner radius */
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      margin-bottom: var(--space-200);
+      aspect-ratio: 16 / 10;
+    }
+    .project-mockup-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s var(--ease-fluid);
+    }
+    .project-card:hover .project-mockup-img { transform: scale(1.02); }
+
+    .project-content {
+      padding: var(--space-75);
+      flex-grow: 1;
+      display: flex; flex-direction: column;
+    }
+    .project-title {
+      font-size: var(--text-xl); font-weight: 600;
+      color: var(--head-solid);
+      margin-bottom: var(--space-75);
+      line-height: 1.3;
+    }
+    .project-description {
+      font-size: var(--text-sm);
+      color: var(--sub);
+      line-height: 1.6;
+      margin-bottom: var(--space-300);
+      flex-grow: 1;
+    }
+    .project-tags {
+      display: flex; gap: var(--space-50); flex-wrap: wrap;
+      margin-bottom: var(--space-300);
+    }
+    .tag-pill {
+      font-size: var(--text-xs); font-weight: 500;
+      padding: var(--space-50) var(--space-100);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-full);
+      color: var(--sub);
+      background: var(--surface);
+    }
+    .project-btn-row {
+      display: flex; align-items: center; gap: var(--space-100);
+    }
+    .btn-card-outline {
+      padding: var(--space-75) var(--space-200);
+      font-size: var(--text-sm); font-weight: 600;
+      color: var(--head-solid);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-full);
+      transition: all 0.25s var(--ease-fluid);
+    }
+    .btn-card-outline:hover { border-color: var(--head-solid); }
+
+    .btn-card-solid {
+      padding: var(--space-75) var(--space-200);
+      font-size: var(--text-sm); font-weight: 600;
+      color: var(--bg);
+      background: var(--head-solid);
+      border: 1px solid var(--head-solid);
+      border-radius: var(--radius-full);
+      display: inline-flex; align-items: center; gap: var(--space-50);
+      transition: all 0.25s var(--ease-fluid);
+    }
+    .btn-card-solid:hover { opacity: 0.9; }
+
+    /* ── HOW IT WORKS SECTION (A2 & A5) ───────────────────────── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-300);
+      margin-top: var(--space-500);
+    }
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: var(--space-300);
+      position: relative;
+    }
+    .step-num {
+      font-size: var(--text-xs); font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-100);
+    }
+    .step-title {
+      font-size: var(--text-lg); font-weight: 600;
+      color: var(--head-solid);
+      margin-bottom: var(--space-75);
+    }
+    .step-desc {
+      font-size: var(--text-sm); color: var(--sub); line-height: 1.6;
+    }
+
+    /* ── ABOUT & TOOLKIT SECTION ─────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-600);
+      align-items: start;
+    }
+    .about-text {
+      font-size: var(--text-base); line-height: 1.7;
+      color: var(--body);
+      margin-bottom: var(--space-300);
+    }
+    .toolkit-container {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: var(--space-300);
+    }
+    .toolkit-title {
+      font-size: var(--text-xs); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: var(--space-200);
+    }
+    .toolkit-tags { display: flex; flex-wrap: wrap; gap: var(--space-75); }
+    .toolkit-pill {
+      font-size: var(--text-sm); font-weight: 500;
+      padding: var(--space-50) var(--space-100);
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-full);
+      color: var(--head-solid);
+      transition: all 0.2s var(--ease-fluid);
+    }
+    .toolkit-pill:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ── FAQ SECTION (A2 & A5) ────────────────────────────────── */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-300);
+      margin-top: var(--space-500);
+    }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: var(--space-300);
+    }
+    .faq-q {
+      font-size: var(--text-base); font-weight: 600;
+      color: var(--head-solid);
+      margin-bottom: var(--space-75);
+    }
+    .faq-a {
+      font-size: var(--text-sm); color: var(--sub); line-height: 1.6;
+    }
+
+    /* ── STRENGTHS SECTION (B6 & B8) ─────────────────────────── */
+    .strengths-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-300);
+      margin-top: var(--space-500);
+    }
+    .strength-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: var(--space-300);
+      transition: all 0.25s var(--ease-fluid);
+    }
+    .strength-card:hover {
+      border-color: var(--sub);
+      transform: translateY(-2px);
+    }
+    .strength-icon-box {
+      width: 36px; height: 36px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      background: var(--card-bg);
+      margin-bottom: var(--space-200);
+    }
+    .strength-icon-box svg {
+      width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8;
+    }
+    .strength-title {
+      font-size: var(--text-base); font-weight: 600; color: var(--head-solid);
+      margin-bottom: var(--space-50);
+    }
+    .strength-desc {
+      font-size: var(--text-sm); color: var(--sub); line-height: 1.6;
+    }
+
+    /* ── CTA BANNER (REFERENCE 03) ───────────────────────────── */
+    #currently-building { padding-block: var(--space-800); }
+    .cta-banner-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #0d0d11;
+      padding: clamp(3rem, 6vw, 5rem) var(--space-300);
+      text-align: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .cta-bg-image {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+      filter: contrast(1.1) brightness(0.7);
+      pointer-events: none;
+    }
+    .cta-overlay { position: relative; z-index: 2; max-width: 680px; }
+    .cta-title {
+      font-size: clamp(1.875rem, 4vw, 3rem); /* text-3xl to text-5xl */
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.15;
+      margin-bottom: var(--space-100);
+    }
+    .cta-sub {
+      font-size: var(--text-base);
+      color: #cbd5e1;
+      margin-bottom: var(--space-300);
+    }
+
+    /* ── FOOTER (REFERENCE 03 & B10) ─────────────────────────── */
+    footer {
+      padding-block: var(--space-500);
+      border-top: 1px solid var(--line);
+      background: var(--bg);
+    }
+    .footer-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: var(--space-500);
+      margin-bottom: var(--space-400);
+      flex-wrap: wrap;
+    }
+    .footer-brand-col { max-width: 320px; }
+    .footer-logo-row {
+      display: flex; align-items: center; gap: var(--space-75);
+      margin-bottom: var(--space-100);
+    }
+    .footer-desc { font-size: var(--text-sm); color: var(--sub); line-height: 1.6; }
+    .footer-social-icons { display: flex; gap: var(--space-100); margin-top: var(--space-200); }
+    .social-btn {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--head-solid);
+      transition: all 0.25s var(--ease-fluid);
+    }
+    .social-btn:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .social-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+    .footer-links-col { display: flex; gap: var(--space-500); }
+    .footer-link-group {
+      display: flex; flex-direction: column; gap: var(--space-75);
+      font-size: var(--text-sm); font-weight: 500;
+    }
+    .footer-link-group a { color: var(--sub); transition: color 0.25s var(--ease-fluid); }
+    .footer-link-group a:hover { color: var(--head-solid); }
+
+    .footer-bottom {
+      padding-top: var(--space-200);
+      border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: var(--text-xs); color: var(--muted);
+      flex-wrap: wrap; gap: var(--space-100);
+    }
+
+    /* ── SCROLL ANIMATIONS (B7 Fluid Interpolation) ───────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(4px);
+      transition: opacity 0.7s var(--ease-fluid), transform 0.7s var(--ease-fluid), filter 0.7s var(--ease-fluid);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    /* ── RESPONSIVE DESIGN ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: var(--space-500); }
+      .about-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .strengths-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-secondary { justify-content: center; }
+      .footer-top { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAVIGATION (Fluid Island Nav B7) ────────────────────── -->
+  <nav id="nav" role="navigation" aria-label="Primary navigation">
+    <a href="#hero" class="nav-brand">
+      <img src="Ad'slogo.png" alt="ADept Logo" class="nav-logo-img" />
+      <span class="nav-logo-text">ADept</span>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <!-- Theme Toggle Button B9 -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg class="sun-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+
+      <a href="#contact" class="nav-cta">
+        Contact
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="8" x2="13" y2="8"></line>
+          <polyline points="9 4 13 8 9 12"></polyline>
+        </svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── HERO SECTION (B5 & Ref 02) ─────────────────────────── -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        
+        <!-- Left Column: Copy & Actions -->
+        <div>
+          <div class="hero-status-pill reveal">
+            <span class="status-dot"></span>
+            Currently building &amp; learning
+          </div>
+
+          <h1 class="hero-headline reveal">
+            Engineering software systems that deliver real performance.
+          </h1>
+
+          <p class="hero-sub reveal">
+            Full-stack development, backend APIs, and secure architecture.
+            Turning complex operational problems into reliable, maintainable software.
+          </p>
+
+          <div class="hero-actions reveal">
+            <a href="#projects" class="btn-primary">
+              View selected work
+            </a>
+            <a href="#contact" class="btn-secondary">
+              Contact me
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="8" x2="13" y2="8"></line>
+                <polyline points="9 4 13 8 9 12"></polyline>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Real Tech Stack Row (No Java, Python, C++, Qt) -->
+          <div class="hero-tech-row reveal">
+            <span class="hero-tech-label">Stack</span>
+            
+            <div class="tech-icon-badge" title="React">
+              <svg viewBox="0 0 100 100" fill="none" stroke="#61DAFB" stroke-width="5">
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(30 50 50)"/>
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(90 50 50)"/>
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(150 50 50)"/>
+                <circle cx="50" cy="50" r="7" fill="#61DAFB"/>
+              </svg>
+            </div>
+
+            <div class="tech-icon-badge" title="TypeScript">
+              <svg viewBox="0 0 128 128">
+                <rect width="128" height="128" rx="16" fill="#3178C6"/>
+                <path d="M68 62h38v11H87v42H75V73H68V62zm-35 9c4 0 7.5 1.5 10 4l-7 8c-1.5-1.5-3-2.5-5-2.5-3 0-5 1.5-5 3.5s2 3.5 6 5c8 3 13 6 13 14s-6 14-17 14c-6 0-12-2-16-6l6-9c3 3 6.5 5 10 5 4 0 6-1.5 6-4s-2-3.5-7-5c-7.5-3-12-6-12-14s6.5-13.5 18-13.5z" fill="#FFF"/>
+              </svg>
+            </div>
+
+            <div class="tech-icon-badge" title="Node.js">
+              <img src="nodej.png" alt="Node.js" />
+            </div>
+
+            <div class="tech-icon-badge" title="MongoDB">
+              <img src="mongodb.png" alt="MongoDB" />
+            </div>
+
+            <div class="tech-icon-badge" title="Vite">
+              <img src="Vite.png" alt="Vite" />
+            </div>
+
+            <div class="tech-icon-badge" title="Pnpm">
+              <img src="pnpm.png" alt="Pnpm" />
+            </div>
+
+            <div class="tech-icon-badge" title="Linux">
+              <img src="linu.png" alt="Linux" />
+            </div>
+
+            <div class="tech-icon-badge" title="EJS">
+              <img src="EJS.png" alt="EJS" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Hero Portrait Card (Ref 02) -->
+        <div class="reveal">
+          <div class="hero-portrait-card">
+            <img src="profile_hero.png" alt="Adeoye Opeyemi" class="hero-portrait-img" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MANDATORY TAGLINE REVEAL SECTION (B11) ───────────────── -->
+  <section id="tagline-reveal">
+    <div class="container">
+      <div class="tagline-container">
+        <h2 class="tagline-text" id="tagline-target">
+          Good engineering is not about complexity. It is about building simple, secure, and dependable systems.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS SECTION (2-COL GRID REFERENCE 01) ─────────── -->
+  <section id="projects">
+    <div class="container">
+      
+      <div class="projects-intro">
+        <p class="section-label">Selected work</p>
+        <h2 class="section-title">
+          Projects built with focus and precision.
+        </h2>
+      </div>
+
+      <!-- 2-Column Grid as in Image 01 -->
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <article class="project-card reveal">
+          <div class="project-mockup-wrapper">
+            <img src="proj1_mockup.png" alt="Sanfaani Commerce Mockup" class="project-mockup-img" />
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Sanfaani commerce platform</h3>
+            <p class="project-description">
+              Commerce and device repair platform handling catalog management, inventory control,
+              repair status tracking, and secure authentication.
+            </p>
+            <div class="project-tags">
+              <span class="tag-pill">Node.js</span>
+              <span class="tag-pill">Express</span>
+              <span class="tag-pill">MongoDB</span>
+              <span class="tag-pill">React</span>
+            </div>
+            <div class="project-btn-row">
+              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-outline">
+                Source code
+              </a>
+              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-solid">
+                Live website
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="13" y2="8"></line><polyline points="9 4 13 8 9 12"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card reveal">
+          <div class="project-mockup-wrapper">
+            <img src="proj2_mockup.png" alt="Nexos Productivity Mockup" class="project-mockup-img" />
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Nexos productivity workspace</h3>
+            <p class="project-description">
+              Productivity and project management application exploring structured task organization,
+              team workflows, and real-time state synchronization.
+            </p>
+            <div class="project-tags">
+              <span class="tag-pill">React</span>
+              <span class="tag-pill">TypeScript</span>
+              <span class="tag-pill">Node.js</span>
+              <span class="tag-pill">Supabase</span>
+            </div>
+            <div class="project-btn-row">
+              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-outline">
+                Source code
+              </a>
+              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-solid">
+                Live website
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="13" y2="8"></line><polyline points="9 4 13 8 9 12"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card reveal">
+          <div class="project-mockup-wrapper">
+            <img src="proj3_mockup.png" alt="IP Research Platform Mockup" class="project-mockup-img" />
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Intellectual property research tool</h3>
+            <p class="project-description">
+              Research platform for intellectual property analysis featuring role-based access control,
+              secure audit logs, and similarity matching algorithms.
+            </p>
+            <div class="project-tags">
+              <span class="tag-pill">React</span>
+              <span class="tag-pill">TypeScript</span>
+              <span class="tag-pill">Node.js</span>
+              <span class="tag-pill">PostgreSQL</span>
+            </div>
+            <div class="project-btn-row">
+              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-outline">
+                Source code
+              </a>
+              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-solid">
+                Live website
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="13" y2="8"></line><polyline points="9 4 13 8 9 12"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project-card reveal">
+          <div class="project-mockup-wrapper">
+            <img src="proj4_mockup.png" alt="Asset Management System Mockup" class="project-mockup-img" />
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Desktop asset management system</h3>
+            <p class="project-description">
+              Desktop application for tracking hardware assets, managing maintenance cycles,
+              and generating structured operational audit reports.
+            </p>
+            <div class="project-tags">
+              <span class="tag-pill">Desktop App</span>
+              <span class="tag-pill">SQLite</span>
+              <span class="tag-pill">Systems Architecture</span>
+            </div>
+            <div class="project-btn-row">
+              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-outline">
+                Source code
+              </a>
+              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-solid">
+                Live website
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="13" y2="8"></line><polyline points="9 4 13 8 9 12"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS SECTION (A2 & A5) ───────────────────────── -->
+  <section id="process">
+    <div class="container">
+      <p class="section-label">Engineering process</p>
+      <h2 class="section-title">
+        Three steps from problem to production.
+      </h2>
+
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-num">01</div>
+          <h3 class="step-title">System analysis</h3>
+          <p class="step-desc">
+            Mapping data models, security boundaries, and API contracts before writing code.
+            Cuts development friction by 40% and eliminates design bottlenecks early.
+          </p>
+        </div>
+
+        <div class="step-card reveal">
+          <div class="step-num">02</div>
+          <h3 class="step-title">Incremental build</h3>
+          <p class="step-desc">
+            Developing modular frontend components and backend services with strict type safety,
+            clean state management, and clear interfaces.
+          </p>
+        </div>
+
+        <div class="step-card reveal">
+          <div class="step-num">03</div>
+          <h3 class="step-title">Verification</h3>
+          <p class="step-desc">
+            Testing against edge cases, auditing authentication boundaries, and tuning database query
+            performance prior to deployment.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT & TOOLKIT SECTION ─────────────────────────────── -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label">About</p>
+      <div class="about-grid">
+        <div>
+          <h2 class="section-title reveal">
+            Engineering with purpose.
+          </h2>
+          <p class="about-text reveal">
+            I am a Software Engineering student focused on building dependable products across the full stack.
+            My focus spans web application architecture, RESTful API design, database modeling, and secure software workflows.
+          </p>
+          <p class="about-text reveal">
+            Every project represents a practical exercise in engineering judgment: choosing clean primitives over unnecessary dependencies,
+            and ensuring every feature fulfills a clear operational need.
+          </p>
+        </div>
+
+        <div class="toolkit-container reveal">
+          <p class="toolkit-title">Engineering toolkit</p>
+          <div class="toolkit-tags">
+            <span class="toolkit-pill">React</span>
+            <span class="toolkit-pill">Next.js</span>
+            <span class="toolkit-pill">TypeScript</span>
+            <span class="toolkit-pill">JavaScript</span>
+            <span class="toolkit-pill">Node.js</span>
+            <span class="toolkit-pill">Express</span>
+            <span class="toolkit-pill">MongoDB</span>
+            <span class="toolkit-pill">Supabase</span>
+            <span class="toolkit-pill">Tailwind CSS</span>
+            <span class="toolkit-pill">Git</span>
+            <span class="toolkit-pill">Linux</span>
+            <span class="toolkit-pill">SQLite</span>
+            <span class="toolkit-pill">Vite</span>
+            <span class="toolkit-pill">Pnpm</span>
+          </div>
+
+          <p class="toolkit-title" style="margin-top: var(--space-300);">Core focus areas</p>
+          <div class="toolkit-tags">
+            <span class="toolkit-pill">Cybersecurity</span>
+            <span class="toolkit-pill">Algorithms &amp; DSA</span>
+            <span class="toolkit-pill">Distributed systems</span>
+            <span class="toolkit-pill">Software architecture</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ SECTION (A2 & A8) ────────────────────────────────── -->
+  <section id="faq">
+    <div class="container">
+      <p class="section-label">Frequently asked questions</p>
+      <h2 class="section-title">
+        Clear answers on engineering work and collaboration.
+      </h2>
+
+      <div class="faq-grid">
+        <div class="faq-item reveal">
+          <h3 class="faq-q">What types of software projects do you specialize in?</h3>
+          <p class="faq-a">
+            I build full-stack web applications, RESTful APIs, database architectures, and internal productivity systems.
+            My focus is on creating reliable, maintainable codebases for operational workflows.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <h3 class="faq-q">Are you available for engineering roles or contracts?</h3>
+          <p class="faq-a">
+            Yes, I am actively open to software engineering internships, full-time junior engineering positions,
+            and contract development roles worldwide.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <h3 class="faq-q">What is your approach to application security?</h3>
+          <p class="faq-a">
+            Security is built-in from day one. I enforce strict input validation, safe authentication mechanisms,
+            role-based access control, and follow Cisco cybersecurity guidelines in every project.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <h3 class="faq-q">How do you handle team communication and updates?</h3>
+          <p class="faq-a">
+            I communicate technical decisions clearly, document API contracts thoroughly, and provide regular progress updates
+            through Git commits and project dashboards.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <h3 class="faq-q">Can you work across both frontend and backend stacks?</h3>
+          <p class="faq-a">
+            Yes, I work fluently across React/Next.js on the frontend and Node.js/Express with MongoDB or PostgreSQL on the backend.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <h3 class="faq-q">How quickly can we get started on a project?</h3>
+          <p class="faq-a">
+            I can review project requirements and provide a technical breakdown within 24 hours. Get in touch directly via LinkedIn or email.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STRENGTHS SECTION (B6 & B8) ─────────────────────────── -->
+  <section id="strengths">
+    <div class="container">
+      <p class="section-label">Engineering principles</p>
+      <h2 class="section-title">
+        Disciplined. Responsible. Thoughtful.
+      </h2>
+
+      <div class="strengths-grid">
+        <div class="strength-card reveal">
+          <div class="strength-icon-box">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
+          <h3 class="strength-title">Systems thinking</h3>
+          <p class="strength-desc">Connecting UI components, business logic, data structures, and security into a single coherent system.</p>
+        </div>
+
+        <div class="strength-card reveal">
+          <div class="strength-icon-box">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h3 class="strength-title">Problem solving</h3>
+          <p class="strength-desc">Addressing root causes rather than patching symptoms. Building durable architecture rather than quick hacks.</p>
+        </div>
+
+        <div class="strength-card reveal">
+          <div class="strength-icon-box">
+            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3 class="strength-title">Ownership</h3>
+          <p class="strength-desc">Testing and refining beyond first delivery. Ensuring code meets high performance and reliability standards.</p>
+        </div>
+
+        <div class="strength-card reveal">
+          <div class="strength-icon-box">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3 class="strength-title">Technical clarity</h3>
+          <p class="strength-desc">Articulating design choices and API contracts clearly to developers and non-technical stakeholders alike.</p>
+        </div>
+
+        <div class="strength-card reveal">
+          <div class="strength-icon-box">
+            <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <h3 class="strength-title">Continuous learning</h3>
+          <p class="strength-desc">Expanding capabilities through systematic study and practical implementation of complex algorithms.</p>
+        </div>
+
+        <div class="strength-card reveal">
+          <div class="strength-icon-box">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3 class="strength-title">Secure judgment</h3>
+          <p class="strength-desc">Enforcing safe defaults, strict access controls, and data protection as core engineering requirements.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA BANNER (REFERENCE 03) ───────────────────────────── -->
+  <section id="currently-building">
+    <div class="container">
+      <div class="cta-banner-card reveal">
+        <img src="cta_bg.png" alt="Workspace Background" class="cta-bg-image" />
+        <div class="cta-overlay">
+          <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: var(--space-100);">
+            Currently building
+          </p>
+          <h2 class="cta-title">
+            Let's build something great.
+          </h2>
+          <p class="cta-sub">
+            Bring your software ideas to life with dependable engineering and maintainable code.
+          </p>
+          <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display: inline-flex;">
+            View GitHub
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="8" x2="13" y2="8"></line>
+              <polyline points="9 4 13 8 9 12"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER (REFERENCE 03 & B10) ─────────────────────────── -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-top">
+        
+        <div class="footer-brand-col">
+          <div class="footer-logo-row">
+            <img src="Ad'slogo.png" alt="ADept Logo" class="nav-logo-img" />
+            <span class="nav-logo-text" style="font-size: var(--text-base);">ADept</span>
+          </div>
+          <p class="footer-desc">
+            Building fast, secure, and maintainable software that delivers real-world value.
+          </p>
+          
+          <div class="footer-social-icons">
+            <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
+              <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+
+            <a href="https://www.linkedin.com/in/adeoye-opeyemi-b9a423367" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+
+            <a href="https://wa.me/qr/BIT3B3HUNBLKD1" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <div class="footer-link-group">
+            <a href="#projects">Projects</a>
+            <a href="#process">Process</a>
+          </div>
+          <div class="footer-link-group">
+            <a href="#about">About</a>
+            <a href="#faq">FAQ</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Adeoye Opeyemi. All rights reserved.</p>
+        <div style="display: flex; gap: var(--space-300);">
+          <a href="#" style="color: var(--muted);">Privacy policy</a>
+          <a href="#" style="color: var(--muted);">Terms of service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── INTERACTIVITY & ANIMATION SCRIPTS ────────────────────── -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // ── THEME TOGGLE SYSTEM B4 & B9 ─────────────────────────
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const htmlEl = document.documentElement;
+
+      const savedTheme = localStorage.getItem('theme') || 
+        (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      
+      setTheme(savedTheme);
+
+      themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = htmlEl.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+      });
+
+      function setTheme(theme) {
+        htmlEl.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      }
+
+      // ── B11 MANDATORY TAGLINE WORD-BY-WORD SCROLL REVEAL ─────
+      const taglineTarget = document.getElementById('tagline-target');
+      if (taglineTarget) {
+        const text = taglineTarget.innerText.trim();
+        const words = text.split(/\s+/);
+        taglineTarget.innerHTML = words.map(word => '<span class="tagline-word">' + word + '</span>').join(' ');
+      }
+
+      // ── B7 FLUID SCROLL INTERPOLATION (IntersectionObserver) ──
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -10% 0px',
+        threshold: 0.15
+      };
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+      // Observe tagline words for individual activation B11
+      const taglineWords = document.querySelectorAll('.tagline-word');
+      const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0.5 });
+
+      taglineWords.forEach((word, idx) => {
+        word.style.transitionDelay = (idx * 35) + 'ms';
+        wordObserver.observe(word);
+      });
+
+    });
+  </script>
+
+</body>
+</html>
