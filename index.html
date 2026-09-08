@@ -10,10 +10,24 @@
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Fonts: Strictly Manrope per B1 rules (No Inter, No Italics) -->
+  <!-- Favicon -->
+  <link rel="icon" href="Ad'slogo.png" type="image/png" />
+
+  <!-- Fonts: JetBrains Mono for Headings & Header, Poppins for Body & Rest -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Local Font Declarations fallback -->
+  <style>
+    @font-face {
+      font-family: 'PoppinsLocal';
+      src: url('Poppins-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
 
   <!-- GSAP & ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
@@ -22,7 +36,8 @@
   <style>
     /* ── DESIGN SYSTEM TOKENS ────────────────────────────────── */
     :root {
-      --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+      --font-heading: 'JetBrains Mono', monospace, sans-serif;
+      --font-sans:    'Poppins', 'PoppinsLocal', system-ui, -apple-system, sans-serif;
 
       /* Easing per B7 */
       --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
@@ -53,14 +68,14 @@
       --space-900: 96px;
 
       /* Radii per B3 */
-      --radius-sm: 6px;
+      --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
       --radius-xl: 24px;
       --radius-full: 9999px;
     }
 
-    /* Dark Mode per B4 */
+    /* Dark Mode per B4 & Accent #ed6c24 */
     [data-theme="dark"] {
       --bg:           #000000;
       --surface:      #181818;
@@ -71,15 +86,16 @@
       --sub:          #a1a1aa;
       --body:         #d4d4d8;
       --head-start:   #ffffff;
-      --head-end:     #9b9b9b;
+      --head-end:     #a1a1aa;
       --head-solid:   #ffffff;
-      --accent:       #c8f542;
-      --accent-subtle:rgba(200, 245, 66, 0.12);
-      --nav-bg:       rgba(0, 0, 0, 0.82);
+      --accent:       #ed6c24;   /* Warm Orange Accent */
+      --accent-hover: #d85b15;
+      --accent-subtle:rgba(237, 108, 36, 0.14);
+      --nav-bg:       rgba(0, 0, 0, 0.85);
       --logo-invert:  0;
     }
 
-    /* Light Mode per B4 & B5 */
+    /* Light Mode per B4, B5 & Accent #ed6c24 */
     [data-theme="light"] {
       --bg:           #ffffff;
       --surface:      #f8fafc;
@@ -92,8 +108,9 @@
       --head-start:   #000000;
       --head-end:     #666666;
       --head-solid:   #0f172a;
-      --accent:       #4d7c0f;
-      --accent-subtle:rgba(77, 124, 15, 0.12);
+      --accent:       #ed6c24;   /* Warm Orange Accent */
+      --accent-hover: #d85b15;
+      --accent-subtle:rgba(237, 108, 36, 0.12);
       --nav-bg:       rgba(255, 255, 255, 0.88);
       --logo-invert:  1;
     }
@@ -106,16 +123,18 @@
       color: var(--body);
       font-family: var(--font-sans);
       font-weight: 400;
-      line-height: 1.5;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      text-wrap: pretty; /* B1 no orphaned words */
+      text-wrap: pretty;
       overflow-x: hidden;
       transition: background-color 0.4s var(--ease-fluid), color 0.4s var(--ease-fluid);
     }
     h1, h2, h3, h4, h5, h6 {
-      text-wrap: balance; /* B1 heading balance */
+      font-family: var(--font-heading);
+      text-wrap: balance;
       color: var(--head-solid);
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; height: auto; }
@@ -158,8 +177,9 @@
       transition: filter 0.3s var(--ease-fluid);
     }
     .nav-logo-text {
-      font-size: var(--text-sm); font-weight: 700;
-      letter-spacing: -0.01em; color: var(--head-solid);
+      font-family: var(--font-heading);
+      font-size: var(--text-base); font-weight: 700;
+      letter-spacing: -0.02em; color: var(--head-solid);
     }
     .nav-links {
       display: flex; gap: var(--space-300); align-items: center;
@@ -190,7 +210,6 @@
     }
     .theme-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
 
-    /* Button Type per B1: Header button text-sm, 8px py, 12px px per B2 */
     .nav-cta {
       font-size: var(--text-sm); font-weight: 600;
       color: var(--head-solid);
@@ -205,12 +224,12 @@
       border-color: var(--head-solid);
       transform: translateY(-1px);
     }
-    .nav-cta:active { transform: translateY(1px) scale(0.98); } /* Active state B9 */
+    .nav-cta:active { transform: translateY(1px) scale(0.98); }
 
     /* ── HERO SECTION (B5 & Ref 02) ─────────────────────────── */
     #hero {
       padding-top: clamp(7.5rem, 14vh, 10.5rem);
-      padding-bottom: var(--space-800);
+      padding-bottom: var(--space-600);
       border-bottom: 1px solid var(--line);
     }
     .hero-grid {
@@ -231,17 +250,18 @@
     }
     .status-dot {
       width: 6px; height: 6px;
-      background: #10b981;
+      background: var(--accent);
       border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
     }
 
-    /* B5 Gradient Heading: Dark theme #FFFFFF -> #9B9B9B, Light theme #000000 -> #666666 */
     .hero-headline {
-      font-size: clamp(2.25rem, 5vw, 3.75rem); /* text-4xl to text-6xl scale */
+      font-family: var(--font-heading);
+      font-size: clamp(2.25rem, 5vw, 3.75rem);
       font-weight: 700;
       line-height: 1.1;
-      letter-spacing: -0.02em;
-      max-width: 680px; /* B5 max width */
+      letter-spacing: -0.03em;
+      max-width: 680px;
       margin-bottom: var(--space-200);
 
       background: linear-gradient(90deg, var(--head-start), var(--head-end));
@@ -253,29 +273,29 @@
       font-size: var(--text-base);
       line-height: 1.6;
       color: var(--sub);
-      max-width: 680px; /* B5 max width */
+      max-width: 680px;
       margin-bottom: var(--space-400);
     }
 
     .hero-actions {
       display: flex; align-items: center; gap: var(--space-200);
       flex-wrap: wrap;
-      margin-bottom: var(--space-500);
+      margin-bottom: var(--space-400);
     }
 
-    /* Main buttons per B1 & B2: text-base (16px), semibold, 8px vertical, 16px horizontal */
     .btn-primary {
       display: inline-flex; align-items: center; gap: var(--space-75);
       padding: var(--space-75) var(--space-200);
-      background: var(--head-solid);
-      color: var(--bg);
+      background: var(--accent);
+      color: #ffffff;
       font-size: var(--text-base); font-weight: 600;
-      border: 1px solid var(--head-solid);
+      border: 1px solid var(--accent);
       border-radius: var(--radius-full);
       transition: all 0.3s var(--ease-fluid);
     }
     .btn-primary:hover {
-      opacity: 0.92;
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
       transform: translateY(-2px);
     }
     .btn-primary:active { transform: scale(0.98); }
@@ -296,37 +316,10 @@
     }
     .btn-secondary:active { transform: scale(0.98); }
 
-    /* Real Tech Stack Row */
-    .hero-tech-row {
-      display: flex; align-items: center; gap: var(--space-200);
-      flex-wrap: wrap;
-      padding-top: var(--space-200);
-      border-top: 1px solid var(--line);
-    }
-    .hero-tech-label {
-      font-size: var(--text-xs); font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-    .tech-icon-badge {
-      display: flex; align-items: center; justify-content: center;
-      width: 36px; height: 36px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-      transition: all 0.25s var(--ease-fluid);
-    }
-    .tech-icon-badge:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-    .tech-icon-badge img { width: 20px; height: 20px; object-fit: contain; }
-    .tech-icon-badge svg { width: 20px; height: 20px; }
-
     /* Hero Portrait Card (Ref 02) */
     .hero-portrait-card {
       background: var(--surface);
-      border: 1px solid var(--line); /* Border all around B4 */
+      border: 1px solid var(--line);
       border-radius: var(--radius-xl);
       padding: var(--space-200);
       position: relative;
@@ -340,6 +333,67 @@
       aspect-ratio: 4 / 4.2;
     }
 
+    /* ── MOVING MARQUEE TECH STACK (ENLARGED TO 45px x 45px) ──── */
+    .marquee-section {
+      padding-top: var(--space-300);
+      border-top: 1px solid var(--line);
+    }
+    .marquee-label {
+      font-family: var(--font-heading);
+      font-size: var(--text-xs); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: var(--space-100);
+    }
+    .marquee-container {
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      width: 100%;
+      padding-block: var(--space-100);
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      gap: var(--space-300);
+      width: max-content;
+      animation: marquee-scroll 24s linear infinite;
+    }
+    .marquee-container:hover .marquee-track {
+      animation-play-state: paused;
+    }
+    @keyframes marquee-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Enlarged Tech Icon Badge: Icon 45px x 45px */
+    .tech-marquee-badge {
+      display: flex; align-items: center; gap: var(--space-100);
+      padding: var(--space-100) var(--space-200);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      transition: all 0.25s var(--ease-fluid);
+      flex-shrink: 0;
+    }
+    .tech-marquee-badge:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .tech-marquee-badge img {
+      width: 45px; height: 45px; object-fit: contain; flex-shrink: 0;
+    }
+    .tech-marquee-badge svg {
+      width: 45px; height: 45px; flex-shrink: 0;
+    }
+    .tech-marquee-name {
+      font-size: var(--text-sm); font-weight: 600;
+      color: var(--head-solid);
+    }
+
     /* ── MANDATORY TAGLINE REVEAL SECTION (B11) ───────────────── */
     #tagline-reveal {
       padding-block: var(--space-800);
@@ -347,18 +401,18 @@
       background: var(--surface);
     }
     .tagline-container {
-      max-width: 680px; /* B5 max width */
+      max-width: 680px;
       margin-inline: auto;
       text-align: center;
     }
     .tagline-text {
-      font-size: clamp(1.875rem, 4vw, 3rem); /* text-3xl to text-5xl scale */
-      font-weight: 600;
+      font-family: var(--font-heading);
+      font-size: clamp(1.875rem, 4vw, 3rem);
+      font-weight: 700;
       line-height: 1.25;
-      letter-spacing: -0.015em;
+      letter-spacing: -0.02em;
       color: var(--head-solid);
     }
-    /* B11 animation: Words start at 30% opacity and light up to 100% on scroll */
     .tagline-word {
       display: inline-block;
       opacity: 0.3;
@@ -372,16 +426,18 @@
     /* ── SECTION BASE ────────────────────────────────────────── */
     section { padding-block: var(--space-800); border-bottom: 1px solid var(--line); }
     .section-label {
-      font-size: var(--text-xs); font-weight: 600;
+      font-family: var(--font-heading);
+      font-size: var(--text-xs); font-weight: 700;
       letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--accent);
       margin-bottom: var(--space-100);
     }
     .section-title {
-      font-size: clamp(1.875rem, 3.5vw, 3rem); /* text-3xl to text-5xl scale */
-      font-weight: 600;
+      font-family: var(--font-heading);
+      font-size: clamp(1.875rem, 3.5vw, 3rem);
+      font-weight: 700;
       line-height: 1.15;
-      letter-spacing: -0.015em;
+      letter-spacing: -0.02em;
       margin-bottom: var(--space-300);
     }
 
@@ -397,9 +453,9 @@
     }
     .project-card {
       background: var(--card-bg);
-      border: 1px solid var(--line); /* Border all around per B4 */
-      border-radius: var(--radius-xl); /* Outer radius = 24px */
-      padding: var(--space-200); /* Gap = 16px */
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: var(--space-200);
       display: flex; flex-direction: column;
       justify-content: space-between;
       transition: all 0.3s var(--ease-fluid);
@@ -409,12 +465,11 @@
       background-color: var(--card-hover);
       transform: translateY(-3px);
     }
-    .project-card:active { transform: scale(0.98); } /* B9 Active state */
+    .project-card:active { transform: scale(0.98); }
 
-    /* Inner radius formula B3: inner = outer (24px) - gap (16px) = 8px (rounded-lg) */
     .project-mockup-wrapper {
       width: 100%;
-      border-radius: var(--radius-lg); /* 8px inner radius */
+      border-radius: var(--radius-lg);
       overflow: hidden;
       background: var(--surface);
       border: 1px solid var(--line);
@@ -434,7 +489,8 @@
       display: flex; flex-direction: column;
     }
     .project-title {
-      font-size: var(--text-xl); font-weight: 600;
+      font-family: var(--font-heading);
+      font-size: var(--text-xl); font-weight: 700;
       color: var(--head-solid);
       margin-bottom: var(--space-75);
       line-height: 1.3;
@@ -474,14 +530,14 @@
     .btn-card-solid {
       padding: var(--space-75) var(--space-200);
       font-size: var(--text-sm); font-weight: 600;
-      color: var(--bg);
-      background: var(--head-solid);
-      border: 1px solid var(--head-solid);
+      color: #ffffff;
+      background: var(--accent);
+      border: 1px solid var(--accent);
       border-radius: var(--radius-full);
       display: inline-flex; align-items: center; gap: var(--space-50);
       transition: all 0.25s var(--ease-fluid);
     }
-    .btn-card-solid:hover { opacity: 0.9; }
+    .btn-card-solid:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
     /* ── HOW IT WORKS SECTION (A2 & A5) ───────────────────────── */
     .steps-grid {
@@ -495,16 +551,17 @@
       border: 1px solid var(--line);
       border-radius: var(--radius-lg);
       padding: var(--space-300);
-      position: relative;
     }
     .step-num {
-      font-size: var(--text-xs); font-weight: 700;
+      font-family: var(--font-heading);
+      font-size: var(--text-sm); font-weight: 700;
       color: var(--accent);
       letter-spacing: 0.1em;
       margin-bottom: var(--space-100);
     }
     .step-title {
-      font-size: var(--text-lg); font-weight: 600;
+      font-family: var(--font-heading);
+      font-size: var(--text-lg); font-weight: 700;
       color: var(--head-solid);
       margin-bottom: var(--space-75);
     }
@@ -512,10 +569,10 @@
       font-size: var(--text-sm); color: var(--sub); line-height: 1.6;
     }
 
-    /* ── ABOUT & TOOLKIT SECTION ─────────────────────────────── */
+    /* ── ABOUT & TOOLKIT SECTION WITH TECH ICONS ─────────────── */
     .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.05fr 0.95fr;
       gap: var(--space-600);
       align-items: start;
     }
@@ -531,27 +588,41 @@
       padding: var(--space-300);
     }
     .toolkit-title {
+      font-family: var(--font-heading);
       font-size: var(--text-xs); font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--muted);
       margin-bottom: var(--space-200);
     }
-    .toolkit-tags { display: flex; flex-wrap: wrap; gap: var(--space-75); }
-    .toolkit-pill {
-      font-size: var(--text-sm); font-weight: 500;
-      padding: var(--space-50) var(--space-100);
+    .toolkit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: var(--space-100);
+    }
+    .toolkit-item-badge {
+      display: flex; align-items: center; gap: var(--space-100);
+      padding: var(--space-75) var(--space-100);
       background: var(--card-bg);
       border: 1px solid var(--line);
-      border-radius: var(--radius-full);
-      color: var(--head-solid);
+      border-radius: var(--radius-md);
       transition: all 0.2s var(--ease-fluid);
     }
-    .toolkit-pill:hover {
+    .toolkit-item-badge:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
     }
+    .toolkit-item-badge img {
+      width: 28px; height: 28px; object-fit: contain; flex-shrink: 0;
+    }
+    .toolkit-item-badge svg {
+      width: 28px; height: 28px; flex-shrink: 0;
+    }
+    .toolkit-item-name {
+      font-size: var(--text-xs); font-weight: 600;
+      color: var(--head-solid);
+    }
 
-    /* ── FAQ SECTION (A2 & A5) ────────────────────────────────── */
+    /* ── FAQ SECTION (A2 & A8) ────────────────────────────────── */
     .faq-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -565,7 +636,8 @@
       padding: var(--space-300);
     }
     .faq-q {
-      font-size: var(--text-base); font-weight: 600;
+      font-family: var(--font-heading);
+      font-size: var(--text-base); font-weight: 700;
       color: var(--head-solid);
       margin-bottom: var(--space-75);
     }
@@ -604,7 +676,8 @@
       width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8;
     }
     .strength-title {
-      font-size: var(--text-base); font-weight: 600; color: var(--head-solid);
+      font-family: var(--font-heading);
+      font-size: var(--text-base); font-weight: 700; color: var(--head-solid);
       margin-bottom: var(--space-50);
     }
     .strength-desc {
@@ -634,8 +707,9 @@
     }
     .cta-overlay { position: relative; z-index: 2; max-width: 680px; }
     .cta-title {
-      font-size: clamp(1.875rem, 4vw, 3rem); /* text-3xl to text-5xl */
-      font-weight: 600;
+      font-family: var(--font-heading);
+      font-size: clamp(1.875rem, 4vw, 3rem);
+      font-weight: 700;
       color: #ffffff;
       line-height: 1.15;
       margin-bottom: var(--space-100);
@@ -676,6 +750,7 @@
     }
     .social-btn:hover {
       border-color: var(--accent);
+      color: var(--accent);
       transform: translateY(-2px);
     }
     .social-btn svg { width: 16px; height: 16px; fill: currentColor; }
@@ -802,51 +877,6 @@
               </svg>
             </a>
           </div>
-
-          <!-- Real Tech Stack Row (No Java, Python, C++, Qt) -->
-          <div class="hero-tech-row reveal">
-            <span class="hero-tech-label">Stack</span>
-            
-            <div class="tech-icon-badge" title="React">
-              <svg viewBox="0 0 100 100" fill="none" stroke="#61DAFB" stroke-width="5">
-                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(30 50 50)"/>
-                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(90 50 50)"/>
-                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(150 50 50)"/>
-                <circle cx="50" cy="50" r="7" fill="#61DAFB"/>
-              </svg>
-            </div>
-
-            <div class="tech-icon-badge" title="TypeScript">
-              <svg viewBox="0 0 128 128">
-                <rect width="128" height="128" rx="16" fill="#3178C6"/>
-                <path d="M68 62h38v11H87v42H75V73H68V62zm-35 9c4 0 7.5 1.5 10 4l-7 8c-1.5-1.5-3-2.5-5-2.5-3 0-5 1.5-5 3.5s2 3.5 6 5c8 3 13 6 13 14s-6 14-17 14c-6 0-12-2-16-6l6-9c3 3 6.5 5 10 5 4 0 6-1.5 6-4s-2-3.5-7-5c-7.5-3-12-6-12-14s6.5-13.5 18-13.5z" fill="#FFF"/>
-              </svg>
-            </div>
-
-            <div class="tech-icon-badge" title="Node.js">
-              <img src="nodej.png" alt="Node.js" />
-            </div>
-
-            <div class="tech-icon-badge" title="MongoDB">
-              <img src="mongodb.png" alt="MongoDB" />
-            </div>
-
-            <div class="tech-icon-badge" title="Vite">
-              <img src="Vite.png" alt="Vite" />
-            </div>
-
-            <div class="tech-icon-badge" title="Pnpm">
-              <img src="pnpm.png" alt="Pnpm" />
-            </div>
-
-            <div class="tech-icon-badge" title="Linux">
-              <img src="linu.png" alt="Linux" />
-            </div>
-
-            <div class="tech-icon-badge" title="EJS">
-              <img src="EJS.png" alt="EJS" />
-            </div>
-          </div>
         </div>
 
         <!-- Right Column: Hero Portrait Card (Ref 02) -->
@@ -857,6 +887,116 @@
         </div>
 
       </div>
+
+      <!-- ── MOVING MARQUEE TECH STACK (ENLARGED TO 45px x 45px) ──── -->
+      <div class="marquee-section reveal">
+        <p class="marquee-label">Engineering Stack</p>
+        <div class="marquee-container">
+          <div class="marquee-track">
+
+            <!-- Item 1: React -->
+            <div class="tech-marquee-badge">
+              <svg viewBox="0 0 100 100" fill="none" stroke="#61DAFB" stroke-width="5">
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(30 50 50)"/>
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(90 50 50)"/>
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(150 50 50)"/>
+                <circle cx="50" cy="50" r="7" fill="#61DAFB"/>
+              </svg>
+              <span class="tech-marquee-name">React</span>
+            </div>
+
+            <!-- Item 2: TypeScript -->
+            <div class="tech-marquee-badge">
+              <img src="typescript_5968381.png" alt="TypeScript" />
+              <span class="tech-marquee-name">TypeScript</span>
+            </div>
+
+            <!-- Item 3: Node.js -->
+            <div class="tech-marquee-badge">
+              <img src="nodej.png" alt="Node.js" />
+              <span class="tech-marquee-name">Node.js</span>
+            </div>
+
+            <!-- Item 4: MongoDB -->
+            <div class="tech-marquee-badge">
+              <img src="mongodb.png" alt="MongoDB" />
+              <span class="tech-marquee-name">MongoDB</span>
+            </div>
+
+            <!-- Item 5: Vite -->
+            <div class="tech-marquee-badge">
+              <img src="Vite.png" alt="Vite" />
+              <span class="tech-marquee-name">Vite</span>
+            </div>
+
+            <!-- Item 6: Pnpm -->
+            <div class="tech-marquee-badge">
+              <img src="pnpm.png" alt="Pnpm" />
+              <span class="tech-marquee-name">Pnpm</span>
+            </div>
+
+            <!-- Item 7: Linux -->
+            <div class="tech-marquee-badge">
+              <img src="linu.png" alt="Linux" />
+              <span class="tech-marquee-name">Linux</span>
+            </div>
+
+            <!-- Item 8: EJS -->
+            <div class="tech-marquee-badge">
+              <img src="EJS.png" alt="EJS" />
+              <span class="tech-marquee-name">EJS</span>
+            </div>
+
+            <!-- Duplicate Set for Continuous Infinite Marquee Scroll -->
+            <div class="tech-marquee-badge">
+              <svg viewBox="0 0 100 100" fill="none" stroke="#61DAFB" stroke-width="5">
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(30 50 50)"/>
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(90 50 50)"/>
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(150 50 50)"/>
+                <circle cx="50" cy="50" r="7" fill="#61DAFB"/>
+              </svg>
+              <span class="tech-marquee-name">React</span>
+            </div>
+
+            <div class="tech-marquee-badge">
+              <img src="typescript_5968381.png" alt="TypeScript" />
+              <span class="tech-marquee-name">TypeScript</span>
+            </div>
+
+            <div class="tech-marquee-badge">
+              <img src="nodej.png" alt="Node.js" />
+              <span class="tech-marquee-name">Node.js</span>
+            </div>
+
+            <div class="tech-marquee-badge">
+              <img src="mongodb.png" alt="MongoDB" />
+              <span class="tech-marquee-name">MongoDB</span>
+            </div>
+
+            <div class="tech-marquee-badge">
+              <img src="Vite.png" alt="Vite" />
+              <span class="tech-marquee-name">Vite</span>
+            </div>
+
+            <div class="tech-marquee-badge">
+              <img src="pnpm.png" alt="Pnpm" />
+              <span class="tech-marquee-name">Pnpm</span>
+            </div>
+
+            <div class="tech-marquee-badge">
+              <img src="linu.png" alt="Linux" />
+              <span class="tech-marquee-name">Linux</span>
+            </div>
+
+            <div class="tech-marquee-badge">
+              <img src="EJS.png" alt="EJS" />
+              <span class="tech-marquee-name">EJS</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1043,7 +1183,7 @@
     </div>
   </section>
 
-  <!-- ── ABOUT & TOOLKIT SECTION ─────────────────────────────── -->
+  <!-- ── ABOUT & TOOLKIT SECTION WITH TECH ICONS ─────────────── -->
   <section id="about">
     <div class="container">
       <p class="section-label">About</p>
@@ -1062,31 +1202,72 @@
           </p>
         </div>
 
+        <!-- Toolkit Section With Real Tech Icons -->
         <div class="toolkit-container reveal">
           <p class="toolkit-title">Engineering toolkit</p>
-          <div class="toolkit-tags">
-            <span class="toolkit-pill">React</span>
-            <span class="toolkit-pill">Next.js</span>
-            <span class="toolkit-pill">TypeScript</span>
-            <span class="toolkit-pill">JavaScript</span>
-            <span class="toolkit-pill">Node.js</span>
-            <span class="toolkit-pill">Express</span>
-            <span class="toolkit-pill">MongoDB</span>
-            <span class="toolkit-pill">Supabase</span>
-            <span class="toolkit-pill">Tailwind CSS</span>
-            <span class="toolkit-pill">Git</span>
-            <span class="toolkit-pill">Linux</span>
-            <span class="toolkit-pill">SQLite</span>
-            <span class="toolkit-pill">Vite</span>
-            <span class="toolkit-pill">Pnpm</span>
+          <div class="toolkit-grid">
+            
+            <div class="toolkit-item-badge">
+              <svg viewBox="0 0 100 100" fill="none" stroke="#61DAFB" stroke-width="5">
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(30 50 50)"/>
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(90 50 50)"/>
+                <ellipse cx="50" cy="50" rx="18" ry="42" transform="rotate(150 50 50)"/>
+                <circle cx="50" cy="50" r="7" fill="#61DAFB"/>
+              </svg>
+              <span class="toolkit-item-name">React</span>
+            </div>
+
+            <div class="toolkit-item-badge">
+              <img src="typescript_5968381.png" alt="TypeScript" />
+              <span class="toolkit-item-name">TypeScript</span>
+            </div>
+
+            <div class="toolkit-item-badge">
+              <img src="nodej.png" alt="Node.js" />
+              <span class="toolkit-item-name">Node.js</span>
+            </div>
+
+            <div class="toolkit-item-badge">
+              <img src="mongodb.png" alt="MongoDB" />
+              <span class="toolkit-item-name">MongoDB</span>
+            </div>
+
+            <div class="toolkit-item-badge">
+              <img src="Vite.png" alt="Vite" />
+              <span class="toolkit-item-name">Vite</span>
+            </div>
+
+            <div class="toolkit-item-badge">
+              <img src="pnpm.png" alt="Pnpm" />
+              <span class="toolkit-item-name">Pnpm</span>
+            </div>
+
+            <div class="toolkit-item-badge">
+              <img src="linu.png" alt="Linux" />
+              <span class="toolkit-item-name">Linux</span>
+            </div>
+
+            <div class="toolkit-item-badge">
+              <img src="EJS.png" alt="EJS" />
+              <span class="toolkit-item-name">EJS</span>
+            </div>
+
           </div>
 
           <p class="toolkit-title" style="margin-top: var(--space-300);">Core focus areas</p>
-          <div class="toolkit-tags">
-            <span class="toolkit-pill">Cybersecurity</span>
-            <span class="toolkit-pill">Algorithms &amp; DSA</span>
-            <span class="toolkit-pill">Distributed systems</span>
-            <span class="toolkit-pill">Software architecture</span>
+          <div class="toolkit-grid">
+            <div class="toolkit-item-badge">
+              <span class="toolkit-item-name">Cybersecurity</span>
+            </div>
+            <div class="toolkit-item-badge">
+              <span class="toolkit-item-name">Algorithms &amp; DSA</span>
+            </div>
+            <div class="toolkit-item-badge">
+              <span class="toolkit-item-name">Distributed systems</span>
+            </div>
+            <div class="toolkit-item-badge">
+              <span class="toolkit-item-name">Software architecture</span>
+            </div>
           </div>
         </div>
       </div>
