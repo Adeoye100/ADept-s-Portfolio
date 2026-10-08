@@ -345,6 +345,35 @@
       aspect-ratio: 4 / 4.2;
     }
 
+    /* Terminal dots styling */
+    .card {
+     width: 100%;
+     height: auto;
+     margin: 0 auto;
+     background-color: #011522;
+     border-radius: 8px;
+     z-index: 1;
+    }
+    .tools {
+     display: flex;
+     align-items: center;
+     padding: 9px;
+    }
+    .circle {
+     padding: 0 4px;
+    }
+    .box {
+     display: inline-block;
+     align-items: center;
+     width: 10px;
+     height: 10px;
+     padding: 1px;
+     border-radius: 50%;
+    }
+    .red { background-color: #ff605c; }
+    .yellow { background-color: #ffbd44; }
+    .green { background-color: #00ca4e; }
+
     /* ── MOVING MARQUEE TECH STACK (ENLARGED TO 45px x 45px) ──── */
     .marquee-section {
       padding-top: var(--space-300);
@@ -1529,8 +1558,21 @@
 
         <!-- Right Column: Hero Portrait Card (Ref 02) -->
         <div class="reveal">
-          <div class="hero-portrait-card">
-            <img src="profile_hero.png" alt="Adeoye Opeyemi" class="hero-portrait-img" />
+          <div class="hero-portrait-card card">
+            <div class="tools">
+              <div class="circle">
+                <span class="red box"></span>
+              </div>
+              <div class="circle">
+                <span class="yellow box"></span>
+              </div>
+              <div class="circle">
+                <span class="green box"></span>
+              </div>
+            </div>
+            <div class="card__content">
+              <img src="profile_hero.png" alt="Adeoye Opeyemi" class="hero-portrait-img" />
+            </div>
           </div>
         </div>
 
@@ -2036,6 +2078,15 @@
               <div class="project-content" style="padding: var(--space-200);">
                 <h3 class="project-title" style="font-size: var(--text-base); margin-bottom: 4px;">Introduction to Cybersecurity</h3>
                 <p class="project-description" style="margin-bottom: 0;">Cisco Networking Academy</p>
+              </div>
+           </article>
+           <article class="project-card reveal" style="cursor: pointer; padding: 0; overflow: hidden;" onclick="openPdfModal('webdescert.pdf', 'Web Design Certification', false)">
+              <div class="project-mockup-wrapper" style="margin-bottom: 0; aspect-ratio: 4/3; border-bottom: 1px solid var(--line); border-radius: var(--radius-xl) var(--radius-xl) 0 0;">
+                <iframe src="webdescert.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" style="width: 100%; height: 100%; border: none; pointer-events: none;"></iframe>
+              </div>
+              <div class="project-content" style="padding: var(--space-200);">
+                <h3 class="project-title" style="font-size: var(--text-base); margin-bottom: 4px;">Web Design Certification</h3>
+                <p class="project-description" style="margin-bottom: 0;">Web Design</p>
               </div>
            </article>
         </div>
