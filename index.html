@@ -81,7 +81,7 @@
     }
 
     /* ── ANTHROPIC STANDARD UI COLOR SCHEME ─────────────────── */
-    /* Dark Mode (Warm Obsidian Carbon & Terracotta) */
+    /* Dark Mode (Warm Obsidian Carbon & Warm Amber Orange #f5a65c) */
     [data-theme="dark"] {
       --bg:           #141413;
       --surface:      #1c1c1a;
@@ -94,14 +94,15 @@
       --head-start:   #ffffff;
       --head-end:     #b8b4ab;
       --head-solid:   #faf9f5;
-      --accent:       #cc785c;   /* Anthropic Signature Terracotta */
-      --accent-hover: #ba674b;
-      --accent-subtle:rgba(204, 120, 92, 0.16);
+      --accent:       #f5a65c;   /* Warm Amber Orange */
+      --accent-hover: #e2944a;
+      --accent-subtle:rgba(245, 166, 92, 0.16);
+      --accent-text:  #141413;
       --nav-bg:       rgba(20, 20, 19, 0.88);
       --logo-invert:  0;
     }
 
-    /* Light Mode (Anthropic Warm Parchment & Terracotta) */
+    /* Light Mode (Anthropic Warm Parchment & Warm Amber Orange #f5a65c) */
     [data-theme="light"] {
       --bg:           #faf9f5;
       --surface:      #f0eee6;
@@ -114,9 +115,10 @@
       --head-start:   #141413;
       --head-end:     #59554e;
       --head-solid:   #141413;
-      --accent:       #cc785c;   /* Anthropic Signature Terracotta */
-      --accent-hover: #ba674b;
-      --accent-subtle:rgba(204, 120, 92, 0.12);
+      --accent:       #f5a65c;   /* Warm Amber Orange */
+      --accent-hover: #e2944a;
+      --accent-subtle:rgba(245, 166, 92, 0.14);
+      --accent-text:  #141413;
       --nav-bg:       rgba(250, 249, 245, 0.90);
       --logo-invert:  1;
     }
@@ -215,6 +217,10 @@
       transform: translateY(-1px);
     }
     .theme-toggle svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+    [data-theme="dark"] .theme-toggle {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
     [data-theme="dark"] .sun-icon { display: block; }
     [data-theme="dark"] .moon-icon { display: none; }
     [data-theme="light"] .sun-icon { display: none; }
@@ -229,6 +235,10 @@
       border-radius: var(--radius-sm);
       display: inline-flex; align-items: center; gap: var(--space-50);
       transition: all 0.2s var(--ease-fluid);
+    }
+    [data-theme="dark"] .nav-cta {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.12);
     }
     .nav-cta:hover {
       border-color: var(--head-solid);
@@ -298,8 +308,8 @@
       display: inline-flex; align-items: center; gap: var(--space-75);
       padding: 9px 18px;
       background: var(--accent);
-      color: #ffffff;
-      font-size: var(--text-sm); font-weight: 500;
+      color: var(--accent-text, #141413);
+      font-size: var(--text-sm); font-weight: 600;
       border: 1px solid var(--accent);
       border-radius: var(--radius-sm);
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -309,7 +319,7 @@
       background: var(--accent-hover);
       border-color: var(--accent-hover);
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(204, 120, 92, 0.25);
+      box-shadow: 0 4px 12px rgba(245, 166, 92, 0.28);
     }
     .btn-primary:active { transform: translateY(0) scale(0.99); }
 
@@ -322,6 +332,10 @@
       border: 1px solid var(--line);
       border-radius: var(--radius-sm);
       transition: all 0.2s var(--ease-fluid);
+    }
+    [data-theme="dark"] .btn-secondary {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.12);
     }
     .btn-secondary:hover {
       border-color: var(--sub);
@@ -428,6 +442,7 @@
     }
     .tech-marquee-badge img {
       width: 45px; height: 45px; object-fit: contain; flex-shrink: 0;
+      transition: filter 0.25s var(--ease-fluid);
     }
     .tech-marquee-badge svg {
       width: 45px; height: 45px; flex-shrink: 0;
@@ -435,6 +450,19 @@
     .tech-marquee-name {
       font-size: var(--text-sm); font-weight: 600;
       color: var(--head-solid);
+    }
+    /* Dark Theme Tech Stack Icon Contrast */
+    [data-theme="dark"] .tech-marquee-badge img[src*="EJS"],
+    [data-theme="dark"] .toolkit-item-badge img[src*="EJS"] {
+      filter: brightness(0) invert(1);
+    }
+    [data-theme="dark"] .tech-marquee-badge img[src*="linu"],
+    [data-theme="dark"] .toolkit-item-badge img[src*="linu"] {
+      filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.45)) brightness(1.2);
+    }
+    [data-theme="dark"] .tech-marquee-badge img[src*="mongodb"],
+    [data-theme="dark"] .toolkit-item-badge img[src*="mongodb"] {
+      filter: brightness(1.3) contrast(1.1);
     }
 
     /* ── MANDATORY TAGLINE REVEAL SECTION (B11) ───────────────── */
@@ -570,6 +598,10 @@
       display: inline-flex; align-items: center; gap: 6px;
       transition: all 0.2s var(--ease-fluid);
     }
+    [data-theme="dark"] .btn-card-outline {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
     .btn-card-outline:hover {
       border-color: var(--head-solid);
       background: var(--card-hover);
@@ -579,7 +611,7 @@
     .btn-card-solid {
       padding: 7px 14px;
       font-size: var(--text-xs); font-weight: 600;
-      color: #ffffff;
+      color: var(--accent-text, #141413);
       background: var(--accent);
       border: 1px solid var(--accent);
       border-radius: var(--radius-sm);
@@ -591,7 +623,7 @@
       background: var(--accent-hover);
       border-color: var(--accent-hover);
       transform: translateY(-1px);
-      box-shadow: 0 3px 8px rgba(204, 120, 92, 0.24);
+      box-shadow: 0 3px 8px rgba(245, 166, 92, 0.26);
     }
 
     /* ── STYLIZED GALLERY BUTTON & MOCKUP OVERLAY ───────────── */
@@ -601,7 +633,7 @@
       font-weight: 600;
       color: var(--accent);
       background: var(--accent-subtle);
-      border: 1px solid rgba(204, 120, 92, 0.28);
+      border: 1px solid rgba(245, 166, 92, 0.32);
       border-radius: var(--radius-sm);
       display: inline-flex;
       align-items: center;
@@ -612,10 +644,10 @@
 
     .btn-card-gallery:hover {
       background: var(--accent);
-      color: #ffffff;
+      color: var(--accent-text, #141413);
       border-color: var(--accent);
       transform: translateY(-1px);
-      box-shadow: 0 3px 10px rgba(204, 120, 92, 0.24);
+      box-shadow: 0 3px 10px rgba(245, 166, 92, 0.28);
     }
 
     .btn-card-gallery:active {
@@ -752,6 +784,10 @@
       border-radius: var(--radius-full);
       cursor: pointer;
       transition: all 0.25s var(--ease-fluid);
+    }
+    [data-theme="dark"] .project-gallery-close {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.12);
     }
 
     .project-gallery-close:hover {
@@ -1064,6 +1100,10 @@
       cursor: pointer;
       transition: all 0.2s var(--ease-fluid);
     }
+    [data-theme="dark"] .lightbox-close-btn {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
     .lightbox-close-btn:hover {
       background: var(--accent);
       color: #ffffff;
@@ -1149,6 +1189,7 @@
     }
     .toolkit-item-badge img {
       width: 28px; height: 28px; object-fit: contain; flex-shrink: 0;
+      transition: filter 0.25s var(--ease-fluid);
     }
     .toolkit-item-badge svg {
       width: 28px; height: 28px; flex-shrink: 0;
@@ -1204,9 +1245,23 @@
       border: 1px solid var(--line);
       border-radius: var(--radius-sm);
       display: flex; align-items: center; justify-content: center;
-      color: var(--accent);
+      color: var(--head-solid);
       background: var(--card-bg);
       margin-bottom: var(--space-200);
+      transition: all 0.25s var(--ease-fluid);
+    }
+    [data-theme="dark"] .strength-icon-box {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+    [data-theme="light"] .strength-icon-box {
+      color: var(--head-solid);
+    }
+    .strength-card:hover .strength-icon-box {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
     }
     .strength-icon-box svg {
       width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8;
@@ -1284,17 +1339,23 @@
       color: var(--head-solid);
       transition: all 0.2s var(--ease-fluid);
     }
+    [data-theme="dark"] .social-btn {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
     .social-btn:hover {
       border-color: var(--accent);
       color: var(--accent);
       background: var(--card-hover);
       transform: translateY(-1px);
     }
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-2px);
+    .social-btn svg {
+      width: 16px; height: 16px;
+      fill: currentColor;
     }
-    .social-btn svg { width: 16px; height: 16px; fill: currentColor; }
+    .social-btn svg path {
+      fill: currentColor;
+    }
 
     .footer-links-col { display: flex; gap: var(--space-500); }
     .footer-link-group {
@@ -1384,10 +1445,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at 35% 35%, rgba(204, 120, 92, 0.35), rgba(204, 120, 92, 0.08));
-      border: 2px solid rgba(204, 120, 92, 0.5);
+      background: radial-gradient(circle at 35% 35%, rgba(245, 166, 92, 0.35), rgba(245, 166, 92, 0.08));
+      border: 2px solid rgba(245, 166, 92, 0.5);
       border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
-      box-shadow: 0 0 30px rgba(204, 120, 92, 0.4), inset 0 0 15px rgba(204, 120, 92, 0.25);
+      box-shadow: 0 0 30px rgba(245, 166, 92, 0.4), inset 0 0 15px rgba(245, 166, 92, 0.25);
       animation: blobMorph 4s ease-in-out infinite alternate, logoPulse 2.5s ease-in-out infinite alternate;
     }
 
@@ -1396,7 +1457,7 @@
       position: absolute;
       inset: -8px;
       border-radius: inherit;
-      background: radial-gradient(circle, rgba(204, 120, 92, 0.25), transparent 70%);
+      background: radial-gradient(circle, rgba(245, 166, 92, 0.25), transparent 70%);
       filter: blur(10px);
       z-index: -1;
       animation: blobMorph 5s ease-in-out infinite reverse;
@@ -1428,11 +1489,11 @@
     @keyframes logoPulse {
       0% {
         transform: scale(0.96);
-        box-shadow: 0 0 20px rgba(204, 120, 92, 0.3);
+        box-shadow: 0 0 20px rgba(245, 166, 92, 0.3);
       }
       100% {
         transform: scale(1.08);
-        box-shadow: 0 0 45px rgba(204, 120, 92, 0.65);
+        box-shadow: 0 0 45px rgba(245, 166, 92, 0.65);
       }
     }
 
@@ -2013,9 +2074,6 @@
                   <polyline points="9 4 13 8 9 12"></polyline>
                 </svg>
               </a>
-              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-outline" aria-label="View source code">
-                Source code
-              </a>
             </div>
           </div>
         </article>
@@ -2063,9 +2121,6 @@
                   <polyline points="9 4 13 8 9 12"></polyline>
                 </svg>
               </a>
-              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-outline" aria-label="View source code">
-                Source code
-              </a>
             </div>
           </div>
         </article>
@@ -2106,12 +2161,12 @@
                 </svg>
                 <span>Gallery</span>
               </button>
-              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-outline">
-                Source code
-              </a>
-              <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="btn-card-solid">
-                Live website
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="13" y2="8"></line><polyline points="9 4 13 8 9 12"></polyline></svg>
+              <a href="https://fgiprp.com" target="_blank" rel="noopener noreferrer" class="btn-card-solid" aria-label="View live website for Intellectual property research tool">
+                <span>Live website</span>
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="3" y1="8" x2="13" y2="8"></line>
+                  <polyline points="9 4 13 8 9 12"></polyline>
+                </svg>
               </a>
             </div>
           </div>
@@ -2467,15 +2522,15 @@
           
           <div class="footer-social-icons">
             <a href="https://github.com/Adeoye100" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
-              <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path fill="currentColor" d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
             </a>
 
             <a href="https://www.linkedin.com/in/adeoye-opeyemi-b9a423367" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path fill="currentColor" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
             </a>
 
             <a href="https://wa.me/qr/BIT3B3HUNBLKD1" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="WhatsApp">
-              <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path fill="currentColor" d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
             </a>
           </div>
         </div>
@@ -2661,7 +2716,7 @@
             {
               src: 'IPRPLandingPage.png',
               title: 'IP research platform overview',
-              caption: 'Centralized portal providing discovery tooling, document queries, and search filtering.'
+              caption: 'Centralized portal providing discovery tooling, document queries, and search filtering at <a href="https://fgiprp.com" target="_blank" rel="noopener noreferrer">fgiprp.com</a>.'
             },
             {
               src: 'IPRPLoginpage.png',
