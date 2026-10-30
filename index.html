@@ -17,10 +17,22 @@
   <!-- Favicon -->
   <link rel="icon" href="Ad'slogo.png" type="image/png" />
 
-  <!-- Fonts: JetBrains Mono for Headings & Header, Poppins for Body & Rest -->
+  <!-- Preload Critical LCP Hero Image -->
+  <link rel="preload" as="image" href="profile_hero.png" fetchpriority="high" />
+
+  <!-- Fonts: Non-blocking asynchronous loading with swap -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      .preloader-overlay { display: none !important; }
+      body.is-loading { overflow: auto !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
 
   <!-- Local Font Declarations fallback -->
   <style>
@@ -32,10 +44,6 @@
       font-display: swap;
     }
   </style>
-
-  <!-- GSAP & ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
 
   <style>
@@ -416,6 +424,7 @@
       align-items: center;
       gap: var(--space-300);
       width: max-content;
+      will-change: transform;
       animation: marquee-scroll 24s linear infinite;
     }
     .marquee-container:hover .marquee-track {
@@ -1373,17 +1382,16 @@
       flex-wrap: wrap; gap: var(--space-100);
     }
 
-    /* ── SCROLL ANIMATIONS (B7 Fluid Interpolation) ───────────── */
+    /* ── SCROLL ANIMATIONS (B7 Fluid Interpolation - Hardware Accelerated) ── */
     .reveal {
       opacity: 0;
       transform: translateY(16px);
-      filter: blur(4px);
-      transition: opacity 0.7s var(--ease-fluid), transform 0.7s var(--ease-fluid), filter 0.7s var(--ease-fluid);
+      will-change: transform, opacity;
+      transition: opacity 0.6s var(--ease-fluid), transform 0.6s var(--ease-fluid);
     }
     .reveal.active {
       opacity: 1;
       transform: translateY(0);
-      filter: blur(0);
     }
 
     /* ── RESPONSIVE DESIGN ───────────────────────────────────── */
@@ -1765,7 +1773,7 @@
     <div class="preloader-content">
       <!-- Blobbing Logo at top -->
       <div class="loader-logo-blob">
-        <img src="Ad'slogo.png" alt="ADept Logo" class="loader-logo-img" />
+        <img src="Ad'slogo.webp" alt="ADept Logo" class="loader-logo-img" width="54" height="54" onerror="this.onerror=null; this.src='Ad\'slogo.png';" />
       </div>
 
       <!-- Uiverse.io Loader by andrew-manzyk -->
@@ -1787,7 +1795,7 @@
   <!-- ── NAVIGATION (Fluid Island Nav B7) ────────────────────── -->
   <nav id="nav" role="navigation" aria-label="Primary navigation">
     <a href="#hero" class="nav-brand">
-      <img src="Ad'slogo.png" alt="ADept Logo" class="nav-logo-img" />
+      <img src="Ad'slogo.webp" alt="ADept Logo" class="nav-logo-img" width="26" height="26" onerror="this.onerror=null; this.src='Ad\'slogo.png';" />
       <span class="nav-logo-text">ADept</span>
     </a>
 
@@ -1886,7 +1894,7 @@
               </div>
             </div>
             <div class="card__content">
-              <img src="profile_hero.png" alt="Adeoye Opeyemi" class="hero-portrait-img" />
+              <img src="profile_hero.png" alt="Adeoye Opeyemi" class="hero-portrait-img" width="1024" height="1024" fetchpriority="high" loading="eager" decoding="async" />
             </div>
           </div>
         </div>
@@ -1912,43 +1920,43 @@
 
             <!-- Item 2: TypeScript -->
             <div class="tech-marquee-badge">
-              <img src="typescript_5968381.png" alt="TypeScript" />
+              <img src="typescript_5968381.webp" alt="TypeScript" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='typescript_5968381.png';" />
               <span class="tech-marquee-name">TypeScript</span>
             </div>
 
             <!-- Item 3: Node.js -->
             <div class="tech-marquee-badge">
-              <img src="nodej.png" alt="Node.js" />
+              <img src="nodej.webp" alt="Node.js" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='nodej.png';" />
               <span class="tech-marquee-name">Node.js</span>
             </div>
 
             <!-- Item 4: MongoDB -->
             <div class="tech-marquee-badge">
-              <img src="mongodb.png" alt="MongoDB" />
+              <img src="mongodb.webp" alt="MongoDB" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='mongodb.png';" />
               <span class="tech-marquee-name">MongoDB</span>
             </div>
 
             <!-- Item 5: Vite -->
             <div class="tech-marquee-badge">
-              <img src="Vite.png" alt="Vite" />
+              <img src="Vite.webp" alt="Vite" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='Vite.png';" />
               <span class="tech-marquee-name">Vite</span>
             </div>
 
             <!-- Item 6: Pnpm -->
             <div class="tech-marquee-badge">
-              <img src="pnpm.png" alt="Pnpm" />
+              <img src="pnpm.webp" alt="Pnpm" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='pnpm.png';" />
               <span class="tech-marquee-name">Pnpm</span>
             </div>
 
             <!-- Item 7: Linux -->
             <div class="tech-marquee-badge">
-              <img src="linu.png" alt="Linux" />
+              <img src="linu.webp" alt="Linux" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='linu.png';" />
               <span class="tech-marquee-name">Linux</span>
             </div>
 
             <!-- Item 8: EJS -->
             <div class="tech-marquee-badge">
-              <img src="EJS.png" alt="EJS" />
+              <img src="EJS.webp" alt="EJS" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='EJS.png';" />
               <span class="tech-marquee-name">EJS</span>
             </div>
 
@@ -1964,37 +1972,37 @@
             </div>
 
             <div class="tech-marquee-badge">
-              <img src="typescript_5968381.png" alt="TypeScript" />
+              <img src="typescript_5968381.webp" alt="TypeScript" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='typescript_5968381.png';" />
               <span class="tech-marquee-name">TypeScript</span>
             </div>
 
             <div class="tech-marquee-badge">
-              <img src="nodej.png" alt="Node.js" />
+              <img src="nodej.webp" alt="Node.js" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='nodej.png';" />
               <span class="tech-marquee-name">Node.js</span>
             </div>
 
             <div class="tech-marquee-badge">
-              <img src="mongodb.png" alt="MongoDB" />
+              <img src="mongodb.webp" alt="MongoDB" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='mongodb.png';" />
               <span class="tech-marquee-name">MongoDB</span>
             </div>
 
             <div class="tech-marquee-badge">
-              <img src="Vite.png" alt="Vite" />
+              <img src="Vite.webp" alt="Vite" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='Vite.png';" />
               <span class="tech-marquee-name">Vite</span>
             </div>
 
             <div class="tech-marquee-badge">
-              <img src="pnpm.png" alt="Pnpm" />
+              <img src="pnpm.webp" alt="Pnpm" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='pnpm.png';" />
               <span class="tech-marquee-name">Pnpm</span>
             </div>
 
             <div class="tech-marquee-badge">
-              <img src="linu.png" alt="Linux" />
+              <img src="linu.webp" alt="Linux" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='linu.png';" />
               <span class="tech-marquee-name">Linux</span>
             </div>
 
             <div class="tech-marquee-badge">
-              <img src="EJS.png" alt="EJS" />
+              <img src="EJS.webp" alt="EJS" width="45" height="45" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='EJS.png';" />
               <span class="tech-marquee-name">EJS</span>
             </div>
 
@@ -2033,7 +2041,7 @@
         <!-- Project 1 -->
         <article class="project-card reveal">
           <div class="project-mockup-wrapper" data-gallery-key="sanfaani" title="Click to view image gallery">
-            <img src="Selected work01_service_problemSolved.png" alt="Sanfaani service preview" class="project-mockup-img" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';" />
+            <img src="Selected work01_service_problemSolved.webp" alt="Sanfaani service preview" class="project-mockup-img" width="743" height="399" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='Selected work01_service_problemSolved.png';" />
             <div style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 12px; color: var(--sub); text-transform: uppercase; border: 1px dashed var(--line); border-radius: var(--radius-lg);">
               [ SANFAANI SERVICE INTERFACE PREVIEW ]
             </div>
@@ -2081,7 +2089,7 @@
         <!-- Project 2 -->
         <article class="project-card reveal">
           <div class="project-mockup-wrapper" data-gallery-key="nexos" title="Click to view image gallery">
-            <img src="Selected work02_Nexos_problemsolved.png" alt="Nexos Productivity Mockup" class="project-mockup-img" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';" />
+            <img src="Selected work02_Nexos_problemsolved.webp" alt="Nexos Productivity Mockup" class="project-mockup-img" width="801" height="530" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='Selected work02_Nexos_problemsolved.png';" />
             <div style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 12px; color: var(--sub); text-transform: uppercase; border: 1px dashed var(--line); border-radius: var(--radius-lg);">
               [ NEXOS WORKSPACE INTERFACE PREVIEW ]
             </div>
@@ -2128,7 +2136,7 @@
         <!-- Project 3 -->
         <article class="project-card reveal">
           <div class="project-mockup-wrapper" data-gallery-key="iprp" title="Click to view image gallery">
-            <img src="IPRPProblemSolved.png" alt="IP Research Platform Mockup" class="project-mockup-img" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';" />
+            <img src="IPRPProblemSolved.webp" alt="IP Research Platform Mockup" class="project-mockup-img" width="902" height="621" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='IPRPProblemSolved.png';" />
             <div style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 12px; color: var(--sub); text-transform: uppercase; border: 1px dashed var(--line); border-radius: var(--radius-lg);">
               [ IP RESEARCH PLATFORM PREVIEW ]
             </div>
@@ -2275,37 +2283,37 @@
             </div>
 
             <div class="toolkit-item-badge">
-              <img src="typescript_5968381.png" alt="TypeScript" />
+              <img src="typescript_5968381.webp" alt="TypeScript" width="28" height="28" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='typescript_5968381.png';" />
               <span class="toolkit-item-name">TypeScript</span>
             </div>
 
             <div class="toolkit-item-badge">
-              <img src="nodej.png" alt="Node.js" />
+              <img src="nodej.webp" alt="Node.js" width="28" height="28" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='nodej.png';" />
               <span class="toolkit-item-name">Node.js</span>
             </div>
 
             <div class="toolkit-item-badge">
-              <img src="mongodb.png" alt="MongoDB" />
+              <img src="mongodb.webp" alt="MongoDB" width="28" height="28" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='mongodb.png';" />
               <span class="toolkit-item-name">MongoDB</span>
             </div>
 
             <div class="toolkit-item-badge">
-              <img src="Vite.png" alt="Vite" />
+              <img src="Vite.webp" alt="Vite" width="28" height="28" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='Vite.png';" />
               <span class="toolkit-item-name">Vite</span>
             </div>
 
             <div class="toolkit-item-badge">
-              <img src="pnpm.png" alt="Pnpm" />
+              <img src="pnpm.webp" alt="Pnpm" width="28" height="28" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='pnpm.png';" />
               <span class="toolkit-item-name">Pnpm</span>
             </div>
 
             <div class="toolkit-item-badge">
-              <img src="linu.png" alt="Linux" />
+              <img src="linu.webp" alt="Linux" width="28" height="28" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='linu.png';" />
               <span class="toolkit-item-name">Linux</span>
             </div>
 
             <div class="toolkit-item-badge">
-              <img src="EJS.png" alt="EJS" />
+              <img src="EJS.webp" alt="EJS" width="28" height="28" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='EJS.png';" />
               <span class="toolkit-item-name">EJS</span>
             </div>
 
@@ -2335,7 +2343,7 @@
         <div class="projects-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-300); margin-top: var(--space-200);">
            <article class="project-card reveal" style="cursor: pointer; padding: 0; overflow: hidden;" onclick="openPdfModal('JavaScript_Essentials_1_certificate_adeoye-emmanuel-st-tau-edu-ng_e788e5a6-ed2f-4fbb-b91d-0d60d7fddfc5.pdf', 'JavaScript Essentials 1', false)">
               <div class="project-mockup-wrapper" style="margin-bottom: 0; aspect-ratio: 4/3; border-bottom: 1px solid var(--line); border-radius: var(--radius-xl) var(--radius-xl) 0 0;">
-                <iframe src="JavaScript_Essentials_1_certificate_adeoye-emmanuel-st-tau-edu-ng_e788e5a6-ed2f-4fbb-b91d-0d60d7fddfc5.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" style="width: 100%; height: 100%; border: none; pointer-events: none;"></iframe>
+                <img src="cert_js.webp" alt="JavaScript Essentials 1 Certificate" class="project-mockup-img" width="1938" height="1313" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='webdescert.jpg';" />
               </div>
               <div class="project-content" style="padding: var(--space-200);">
                 <h3 class="project-title" style="font-size: var(--text-base); margin-bottom: 4px;">JavaScript Essentials 1</h3>
@@ -2344,7 +2352,7 @@
            </article>
            <article class="project-card reveal" style="cursor: pointer; padding: 0; overflow: hidden;" onclick="openPdfModal('Introduction_to_Cybersecurity_certificate_adeoye-emmanuel-st-tau-edu-ng_5e1a3b29-7b96-4e28-85e6-f59b41349f0d.pdf', 'Introduction to Cybersecurity', false)">
               <div class="project-mockup-wrapper" style="margin-bottom: 0; aspect-ratio: 4/3; border-bottom: 1px solid var(--line); border-radius: var(--radius-xl) var(--radius-xl) 0 0;">
-                <iframe src="Introduction_to_Cybersecurity_certificate_adeoye-emmanuel-st-tau-edu-ng_5e1a3b29-7b96-4e28-85e6-f59b41349f0d.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" style="width: 100%; height: 100%; border: none; pointer-events: none;"></iframe>
+                <img src="cert_cybersecurity.webp" alt="Introduction to Cybersecurity Certificate" class="project-mockup-img" width="1938" height="1313" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='webdescert.jpg';" />
               </div>
               <div class="project-content" style="padding: var(--space-200);">
                 <h3 class="project-title" style="font-size: var(--text-base); margin-bottom: 4px;">Introduction to Cybersecurity</h3>
@@ -2353,7 +2361,7 @@
            </article>
            <article class="project-card reveal" style="cursor: pointer; padding: 0; overflow: hidden;" onclick="openPdfModal('webdescert.pdf', 'Web Design Certification', false)">
               <div class="project-mockup-wrapper" style="margin-bottom: 0; aspect-ratio: 4/3; border-bottom: 1px solid var(--line); border-radius: var(--radius-xl) var(--radius-xl) 0 0;">
-                <iframe src="webdescert.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" style="width: 100%; height: 100%; border: none; pointer-events: none;"></iframe>
+                <img src="cert_webdes.webp" alt="Web Design Certification" class="project-mockup-img" width="1500" height="1388" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='webdescert.jpg';" />
               </div>
               <div class="project-content" style="padding: var(--space-200);">
                 <h3 class="project-title" style="font-size: var(--text-base); margin-bottom: 4px;">Web Design Certification</h3>
@@ -2483,7 +2491,7 @@
   <section id="currently-building">
     <div class="container">
       <div class="cta-banner-card reveal">
-        <img src="bg_image.jpg" alt="Workspace Background" class="cta-bg-image" />
+        <img src="bg_image.webp" alt="Workspace Background" class="cta-bg-image" width="1280" height="1178" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='bg_image.jpg';" />
         <div class="cta-overlay">
           <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: var(--space-100);">
             Currently building
@@ -2513,7 +2521,7 @@
         
         <div class="footer-brand-col">
           <div class="footer-logo-row">
-            <img src="Ad'slogo.png" alt="ADept Logo" class="nav-logo-img" />
+            <img src="Ad'slogo.webp" alt="ADept Logo" class="nav-logo-img" width="26" height="26" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='Ad\'slogo.png';" />
             <span class="nav-logo-text" style="font-size: var(--text-base);">ADept</span>
           </div>
           <p class="footer-desc">
@@ -2586,13 +2594,26 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-      // ── 5-SECOND PRELOADER TIMEOUT ───────────────────────────
+      // ── HIGH-PERFORMANCE PRELOADER DISMISSAL ─────────────────
       const preloader = document.getElementById('preloader');
-      if (preloader) {
+      function dismissPreloader() {
+        if (!preloader || preloader.classList.contains('preloader-hidden')) return;
+        preloader.classList.add('preloader-hidden');
+        document.body.classList.remove('is-loading');
         setTimeout(() => {
-          preloader.classList.add('preloader-hidden');
-          document.body.classList.remove('is-loading');
-        }, 5000);
+          if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
+        }, 850);
+      }
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        dismissPreloader();
+      } else {
+        if (document.readyState === 'complete') {
+          setTimeout(dismissPreloader, 350);
+        } else {
+          window.addEventListener('load', () => setTimeout(dismissPreloader, 350));
+          setTimeout(dismissPreloader, 1000); // safety fallback
+        }
       }
 
       // ── THEME TOGGLE SYSTEM B4 & B9 ─────────────────────────
@@ -2634,6 +2655,7 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('active');
+            revealObserver.unobserve(entry.target);
           }
         });
       }, observerOptions);
@@ -2646,6 +2668,7 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('active');
+            wordObserver.unobserve(entry.target);
           }
         });
       }, { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0.5 });
@@ -2662,12 +2685,12 @@
           subtitle: 'OPERATIONS PLATFORM | 3 IMAGE GALLERY',
           slides: [
             {
-              src: 'Selected work01_service_problemSolved.png',
+              src: 'Selected work01_service_problemSolved.webp',
               title: 'Operational problem & workflow solution',
               caption: 'Consolidates fragmented paper tracking and manual records into a unified workflow: Service → Transaction → Thermal/QR Receipt → AuditLog.'
             },
             {
-              src: 'sanfaaniUI.jpg',
+              src: 'sanfaaniUI.webp',
               title: 'Sanfaani service operations interface',
               caption: 'Front-desk operations screen managing active charging bays, coworking passes, inventory POS checkout, and live daily registers.'
             },
@@ -2683,17 +2706,17 @@
           subtitle: 'LOCAL-FIRST DEVELOPER WORKSPACE | 4 IMAGE GALLERY',
           slides: [
             {
-              src: 'Selected work02_Nexos_problemsolved.png',
+              src: 'Selected work02_Nexos_problemsolved.webp',
               title: 'Operational problem & local-first solution',
               caption: 'Eliminates network latency and server lock-in with a local-first CRDT architecture, immediate offline writes, and deterministic peer-to-peer sync.'
             },
             {
-              src: 'nexosui.jpg',
+              src: 'nexosui.webp',
               title: 'Nexos developer workspace interface',
               caption: 'Unified developer workspace featuring GitHub-linked Kanban boards, habit heatmaps, automated standup generation, and context-aware AI assistant.'
             },
             {
-              src: '01_Nexos-kanbaan.png',
+              src: '01_Nexos-kanbaan.webp',
               title: 'GitHub-linked Kanban workflow',
               caption: 'Real-time task synchronization across states with optimistic updates and offline resilience.'
             },
@@ -2709,22 +2732,22 @@
           subtitle: 'IP ANALYSIS & SIMILARITY SEARCH | 4 IMAGE GALLERY',
           slides: [
             {
-              src: 'IPRPProblemSolved.png',
+              src: 'IPRPProblemSolved.webp',
               title: 'Problem context & research architecture',
               caption: 'Streamlines IP document discovery and evaluation with indexed metadata search and analysis.'
             },
             {
-              src: 'IPRPLandingPage.png',
+              src: 'IPRPLandingPage.webp',
               title: 'IP research platform overview',
               caption: 'Centralized portal providing discovery tooling, document queries, and search filtering at <a href="https://fgiprp.com" target="_blank" rel="noopener noreferrer">fgiprp.com</a>.'
             },
             {
-              src: 'IPRPLoginpage.png',
+              src: 'IPRPLoginpage.webp',
               title: 'Role-based access & auth boundary',
               caption: 'Enterprise access management ensuring research privacy and granular user permissions.'
             },
             {
-              src: 'IPRPdiagram.png',
+              src: 'IPRPdiagram.webp',
               title: 'System architecture & similarity pipeline',
               caption: 'Deep document similarity matching pipeline and auditable logging infrastructure.'
             }
@@ -2771,7 +2794,7 @@
           const num = String(index + 1).padStart(2, '0');
           return '<div class="gal-slide' + (index === 0 ? ' active' : '') + '" data-index="' + index + '" aria-hidden="' + (index === 0 ? 'false' : 'true') + '">' +
             '<div class="gal-img">' +
-              '<img src="' + slide.src + '" alt="' + slide.title + '" draggable="false" />' +
+              '<img src="' + slide.src + '" alt="' + slide.title + '" loading="lazy" decoding="async" draggable="false" />' +
             '</div>' +
             '<div class="gal-num">' + num + '</div>' +
             '<div class="gal-caption">' +
