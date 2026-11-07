@@ -1394,6 +1394,33 @@
       transform: translateY(0);
     }
 
+    /* ── ENCRYPTED TEXT ANIMATION (Aceternity UI Minimal Integration) ── */
+    .encrypted-char-scrambled {
+      color: #737373; /* Tailwind text-neutral-500 */
+      opacity: 0.8;
+      font-family: var(--font-heading);
+      display: inline;
+    }
+    [data-theme="dark"] .encrypted-char-scrambled {
+      color: #a3a3a3; /* Calibrated contrast against dark surface */
+      opacity: 0.85;
+    }
+    [data-theme="light"] .encrypted-char-scrambled {
+      color: #737373; /* Tailwind text-neutral-500 */
+      opacity: 0.85;
+    }
+    .encrypted-char-revealed {
+      color: inherit;
+      opacity: 1;
+      display: inline;
+    }
+    .nav-links a,
+    .nav-logo-text,
+    .nav-cta-label {
+      display: inline-block;
+      transition: color 0.2s var(--ease-fluid);
+    }
+
     /* ── RESPONSIVE DESIGN ───────────────────────────────────── */
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; gap: var(--space-500); }
@@ -1826,7 +1853,7 @@
       </button>
 
       <a href="#contact" class="nav-cta">
-        Contact
+        <span class="nav-cta-label">Contact</span>
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="3" y1="8" x2="13" y2="8"></line>
           <polyline points="9 4 13 8 9 12"></polyline>
@@ -2603,6 +2630,7 @@
         setTimeout(() => {
           if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
         }, 850);
+        initHeaderAndHeroDecryption();
       }
 
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -2677,6 +2705,196 @@
         word.style.transitionDelay = (idx * 35) + 'ms';
         wordObserver.observe(word);
       });
+
+      // ── ACETERNITY ENCRYPTED TEXT ANIMATION (Lightweight Pure JS Port) ──
+      const ENCRYPTED_CHARSET =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-={}[];:,.<>/?";
+
+      function getRandomEncryptedChar(charset) {
+        return charset.charAt(Math.floor(Math.random() * charset.length));
+      }
+
+      function generateGibberish(original, charset) {
+        if (!original) return "";
+        let result = "";
+        for (let i = 0; i < original.length; i++) {
+          result += original[i] === " " ? " " : getRandomEncryptedChar(charset);
+        }
+        return result;
+      }
+
+      function escapeEncryptedChar(c) {
+        if (c === '<') return '&lt;';
+        if (c === '>') return '&gt;';
+        if (c === '&') return '&amp;';
+        if (c === '"') return '&quot;';
+        return c;
+      }
+
+      function animateEncryptedText(el, options) {
+        options = options || {};
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          return;
+        }
+
+        const rawText = el.getAttribute('data-original-text') || el.innerText.trim();
+        if (!rawText) return;
+
+        if (!el.getAttribute('data-original-text')) {
+          el.setAttribute('data-original-text', rawText);
+        }
+
+        if (el._encryptedAnimFrame) {
+          cancelAnimationFrame(el._encryptedAnimFrame);
+          el._encryptedAnimFrame = null;
+        }
+
+        // Lock minWidth on nav elements during scramble to prevent layout jitter (CLS = 0)
+        const isNav = el.classList.contains('nav-logo-text') || 
+                      el.classList.contains('nav-cta-label') || 
+                      (el.tagName === 'A' && el.closest('.nav-links'));
+        if (isNav && !el.style.minWidth) {
+          const rect = el.getBoundingClientRect();
+          if (rect.width > 0) {
+            el.style.minWidth = Math.ceil(rect.width) + 'px';
+            el.style.display = 'inline-block';
+            el.style.textAlign = 'center';
+          }
+        }
+
+        const charset = options.charset || ENCRYPTED_CHARSET;
+        const revealDelayMs = options.revealDelayMs !== undefined 
+          ? options.revealDelayMs 
+          : (rawText.length > 30 ? 32 : 45);
+        const flipDelayMs = options.flipDelayMs !== undefined ? options.flipDelayMs : 50;
+
+        el.setAttribute('aria-label', rawText);
+        el.setAttribute('role', 'text');
+
+        let scrambleChars = generateGibberish(rawText, charset).split('');
+        let startTime = performance.now();
+        let lastFlipTime = startTime;
+        const totalLength = rawText.length;
+
+        const update = (now) => {
+          const elapsedMs = now - startTime;
+          const currentRevealCount = Math.min(
+            totalLength,
+            Math.floor(elapsedMs / Math.max(1, revealDelayMs))
+          );
+
+          if (currentRevealCount >= totalLength) {
+            el.textContent = rawText;
+            el._encryptedAnimFrame = null;
+            if (isNav) {
+              el.style.minWidth = '';
+            }
+            return;
+          }
+
+          const timeSinceLastFlip = now - lastFlipTime;
+          if (timeSinceLastFlip >= Math.max(0, flipDelayMs)) {
+            for (let i = currentRevealCount; i < totalLength; i++) {
+              if (rawText[i] !== ' ') {
+                scrambleChars[i] = getRandomEncryptedChar(charset);
+              } else {
+                scrambleChars[i] = ' ';
+              }
+            }
+            lastFlipTime = now;
+          }
+
+          let html = '';
+          for (let i = 0; i < totalLength; i++) {
+            const isRevealed = i < currentRevealCount;
+            const char = isRevealed ? rawText[i] : (rawText[i] === ' ' ? ' ' : scrambleChars[i]);
+            const cls = isRevealed ? 'encrypted-char-revealed' : 'encrypted-char-scrambled';
+            if (char === ' ') {
+              html += ' ';
+            } else {
+              html += '<span class="' + cls + '">' + escapeEncryptedChar(char) + '</span>';
+            }
+          }
+          el.innerHTML = html;
+
+          el._encryptedAnimFrame = requestAnimationFrame(update);
+        };
+
+        el._encryptedAnimFrame = requestAnimationFrame(update);
+      }
+
+      function initHeaderAndHeroDecryption() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        // Animate Header Navigation with subtle stagger
+        const navElements = [
+          document.querySelector('.nav-logo-text'),
+          ...document.querySelectorAll('.nav-links a'),
+          document.querySelector('.nav-cta-label')
+        ].filter(Boolean);
+
+        navElements.forEach((el, index) => {
+          setTimeout(() => {
+            animateEncryptedText(el, { revealDelayMs: 38, flipDelayMs: 45 });
+          }, index * 60);
+        });
+
+        // Animate Hero Headline
+        const heroHeadline = document.querySelector('h1.hero-headline');
+        if (heroHeadline && !heroHeadline._encryptedDone) {
+          heroHeadline._encryptedDone = true;
+          setTimeout(() => {
+            animateEncryptedText(heroHeadline, { revealDelayMs: 32, flipDelayMs: 45 });
+          }, 120);
+        }
+      }
+
+      // If preloader is already gone or absent, trigger header and hero decryption immediately
+      if (!preloader || preloader.classList.contains('preloader-hidden')) {
+        initHeaderAndHeroDecryption();
+      }
+
+      // IntersectionObserver for Section Headlines (triggered once as user scrolls into view)
+      const encryptedHeadlineObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !entry.target._encryptedDone) {
+            entry.target._encryptedDone = true;
+            observer.unobserve(entry.target);
+            animateEncryptedText(entry.target);
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '0px 0px -10% 0px',
+        threshold: 0.2
+      });
+
+      // Observe all section headlines alone
+      const sectionHeadlines = document.querySelectorAll('h2.section-title, h2.cta-title');
+      sectionHeadlines.forEach(h => encryptedHeadlineObserver.observe(h));
+
+      // Interactive hover triggers for header navigation
+      const navBrand = document.querySelector('.nav-brand');
+      const navLogoText = document.querySelector('.nav-logo-text');
+      if (navBrand && navLogoText) {
+        navBrand.addEventListener('mouseenter', () => {
+          animateEncryptedText(navLogoText, { revealDelayMs: 35, flipDelayMs: 40 });
+        });
+      }
+
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('mouseenter', () => {
+          animateEncryptedText(link, { revealDelayMs: 35, flipDelayMs: 40 });
+        });
+      });
+
+      const navCta = document.querySelector('.nav-cta');
+      const navCtaLabel = document.querySelector('.nav-cta-label');
+      if (navCta && navCtaLabel) {
+        navCta.addEventListener('mouseenter', () => {
+          animateEncryptedText(navCtaLabel, { revealDelayMs: 35, flipDelayMs: 40 });
+        });
+      }
 
       // ── PROJECT GALLERIES (SIWES CAROUSEL MECHANISM) ──────────
       const projectGalleries = {
